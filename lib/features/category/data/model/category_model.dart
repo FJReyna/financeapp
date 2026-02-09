@@ -1,0 +1,51 @@
+import 'package:finance/features/category/domain/entites/category.dart';
+import 'package:hive_ce_flutter/hive_ce_flutter.dart';
+
+part 'category_model.g.dart';
+
+@HiveType(typeId: 0)
+class CategoryModel {
+  @HiveField(0)
+  final String id;
+  @HiveField(1)
+  final String name;
+  @HiveField(2)
+  final int icon;
+  @HiveField(3)
+  final int color;
+  @HiveField(4)
+  final String iconFontFamily;
+  @HiveField(5)
+  final String iconFontPackage;
+
+  CategoryModel({
+    required this.id,
+    required this.name,
+    required this.icon,
+    required this.color,
+    required this.iconFontFamily,
+    required this.iconFontPackage,
+  });
+
+  factory CategoryModel.fromEntity(Category category) {
+    return CategoryModel(
+      id: category.id,
+      name: category.name,
+      icon: category.icon,
+      color: category.color,
+      iconFontFamily: category.iconFontFamily,
+      iconFontPackage: category.iconFontPackage,
+    );
+  }
+
+  Category toEntity() {
+    return Category(
+      id: id,
+      name: name,
+      icon: icon,
+      color: color,
+      iconFontFamily: iconFontFamily,
+      iconFontPackage: iconFontPackage,
+    );
+  }
+}

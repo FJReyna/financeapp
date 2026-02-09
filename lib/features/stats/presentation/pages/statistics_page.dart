@@ -1,6 +1,6 @@
 import 'package:finance/core/widgets/bottom_nav_bar.dart';
 import 'package:finance/features/stats/presentation/widgets/bar_chart_stats.dart';
-import 'package:finance/features/stats/presentation/widgets/tabs/stats_tab.dart';
+import 'package:finance/features/stats/presentation/widgets/stats_tab.dart';
 import 'package:flutter/material.dart';
 
 class StatisticsPage extends StatelessWidget {
