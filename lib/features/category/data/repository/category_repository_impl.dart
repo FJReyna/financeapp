@@ -20,9 +20,9 @@ class CategoryRepositoryImpl implements CategoryRepository {
   }
 
   @override
-  Future<List<Category>> getCategories(int limit) async {
+  Future<List<Category>> getCategories() async {
     final models = await _localDatasource.getAll();
-    return models.map((model) => model.toEntity()).take(limit).toList();
+    return models.map((model) => model.toEntity()).toList();
   }
 
   @override

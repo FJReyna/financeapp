@@ -54,12 +54,8 @@ class StatsTab extends StatelessWidget {
                 return Column(
                   children: state.topCategories.map((category) {
                     return CategoryDesc(
-                      icon: IconData(
-                        category.icon,
-                        fontFamily: category.iconFontFamily,
-                        fontPackage: category.iconFontPackage,
-                      ),
-                      iconColor: Color(category.color),
+                      icon: category.icon,
+                      iconColor: category.color,
                       title: category.name,
                     );
                   }).toList(),

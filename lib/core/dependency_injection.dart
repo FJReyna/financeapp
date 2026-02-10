@@ -6,6 +6,12 @@ import 'package:finance/features/category/data/repository/category_repository_im
 import 'package:finance/features/category/domain/repository/category_repository.dart';
 import 'package:finance/features/category/domain/usecases/get_top_categories.dart';
 import 'package:finance/features/stats/presentation/bloc/stats_bloc.dart';
+import 'package:finance/features/transactions/data/datasource/transaction_local_datasource.dart';
+import 'package:finance/features/transactions/data/model/transaction_model.dart';
+import 'package:finance/features/transactions/data/repository/transaction_repository_impl.dart';
+import 'package:finance/features/transactions/domain/repository/transaction_repository.dart';
+import 'package:finance/features/transactions/domain/usecase/get_all_transactions.dart';
+import 'package:finance/features/transactions/presentation/bloc/transactions/transactions_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
@@ -20,9 +26,13 @@ Future<void> setup() async {
   getIt.registerSingleton<Uuid>(Uuid());
 
   await openAndRegisterBoxes(hiveService);
-  await setUpCategories();
+  List<String> categoryIds = await setUpCategories();
+  await setUpTransactions(categoryIds);
 
   getIt.registerFactory<StatsBloc>(() => StatsBloc(getIt<GetTopCategories>()));
+  getIt.registerFactory<TransactionsBloc>(
+    () => TransactionsBloc(getIt<GetAllTransactions>()),
+  );
 }
 
 Future<void> openAndRegisterBoxes(HiveService hiveService) async {
@@ -30,15 +40,51 @@ Future<void> openAndRegisterBoxes(HiveService hiveService) async {
     HiveBoxNames.categories,
   );
   getIt.registerSingleton<Box<CategoryModel>>(categoryBox);
+
+  final transactionBox = await hiveService.openBox<TransactionModel>(
+    HiveBoxNames.transactions,
+  );
+  getIt.registerSingleton<Box<TransactionModel>>(transactionBox);
 }
 
-Future<void> setUpCategories() async {
-  CategoryLocalDatasource categoryLocalDatasource = CategoryLocalDatasource(
-    getIt<Box<CategoryModel>>(),
+Future<void> setUpTransactions(List<String> categoryIds) async {
+  Box<TransactionModel> transactionBox = getIt<Box<TransactionModel>>();
+
+  TransactionLocalDatasource transactionLocalDatasource =
+      TransactionLocalDatasource(transactionBox);
+
+  if (kDebugMode && transactionBox.isEmpty) {
+    await transactionLocalDatasource.seed(categoryIds);
+  }
+
+  getIt.registerLazySingleton<TransactionLocalDatasource>(
+    () => transactionLocalDatasource,
   );
 
-  if (kDebugMode) {
-    await categoryLocalDatasource.seed();
+  getIt.registerLazySingleton<TransactionRepository>(
+    () => TransactionRepositoryImpl(
+      localDatasource: getIt<TransactionLocalDatasource>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<GetAllTransactions>(
+    () => GetAllTransactions(
+      getIt<TransactionRepository>(),
+      getIt<CategoryRepository>(),
+    ),
+  );
+}
+
+Future<List<String>> setUpCategories() async {
+  List<String> categoryIds = [];
+  Box<CategoryModel> categoryBox = getIt<Box<CategoryModel>>();
+
+  CategoryLocalDatasource categoryLocalDatasource = CategoryLocalDatasource(
+    categoryBox,
+  );
+
+  if (categoryBox.isEmpty) {
+    categoryIds = await categoryLocalDatasource.seed();
   }
 
   getIt.registerLazySingleton<CategoryLocalDatasource>(
@@ -52,4 +98,6 @@ Future<void> setUpCategories() async {
   getIt.registerLazySingleton<GetTopCategories>(
     () => GetTopCategories(getIt<CategoryRepository>()),
   );
+
+  return categoryIds;
 }

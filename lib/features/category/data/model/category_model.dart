@@ -1,4 +1,5 @@
 import 'package:finance/features/category/domain/entites/category.dart';
+import 'package:flutter/material.dart';
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 
 part 'category_model.g.dart';
@@ -31,10 +32,10 @@ class CategoryModel {
     return CategoryModel(
       id: category.id,
       name: category.name,
-      icon: category.icon,
-      color: category.color,
-      iconFontFamily: category.iconFontFamily,
-      iconFontPackage: category.iconFontPackage,
+      icon: category.icon.codePoint,
+      color: category.color.toARGB32(),
+      iconFontFamily: category.icon.fontFamily ?? '',
+      iconFontPackage: category.icon.fontPackage ?? '',
     );
   }
 
@@ -42,10 +43,17 @@ class CategoryModel {
     return Category(
       id: id,
       name: name,
-      icon: icon,
-      color: color,
-      iconFontFamily: iconFontFamily,
-      iconFontPackage: iconFontPackage,
+      icon: IconData(
+        icon,
+        fontFamily: iconFontFamily,
+        fontPackage: iconFontPackage,
+      ),
+      color: Color.fromARGB(
+        (color >> 24) & 0xFF,
+        (color >> 16) & 0xFF,
+        (color >> 8) & 0xFF,
+        color & 0xFF,
+      ),
     );
   }
 }

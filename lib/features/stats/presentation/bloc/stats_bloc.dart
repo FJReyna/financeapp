@@ -18,7 +18,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
   ) async {
     emit(state.copyWith(topCategoriesStatus: TopCategoriesStatus.loading));
     final Either<Exception, List<Category>> result = await _getTopCategories
-        .call(GetTopCategoriesParams(4));
+        .call(null);
     result.fold(
       (failure) => emit(
         state.copyWith(

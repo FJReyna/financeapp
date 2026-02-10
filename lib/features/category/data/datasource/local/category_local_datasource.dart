@@ -22,7 +22,9 @@ class CategoryLocalDatasource {
     await box.delete(id);
   }
 
-  Future<bool> seed() async {
+  Future<List<String>> seed() async {
+    List<String> categoryIds = [];
+
     IconData houseIconData = FontAwesomeIcons.house;
     IconData utensilsIconData = FontAwesomeIcons.utensils;
     IconData carIconData = FontAwesomeIcons.car;
@@ -66,9 +68,9 @@ class CategoryLocalDatasource {
 
       for (var category in defaultCategories) {
         await add(category);
+        categoryIds.add(category.id);
       }
-      return true;
     }
-    return false;
+    return categoryIds;
   }
 }
