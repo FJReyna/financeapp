@@ -1,10 +1,11 @@
+import 'package:finance/core/database/hive_type_id.dart';
 import 'package:finance/features/category/domain/entites/category.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 
 part 'category_model.g.dart';
 
-@HiveType(typeId: 0)
+@HiveType(typeId: HiveTypeId.category)
 class CategoryModel {
   @HiveField(0)
   final String id;

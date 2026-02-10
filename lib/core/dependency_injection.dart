@@ -5,6 +5,12 @@ import 'package:finance/features/category/data/model/category_model.dart';
 import 'package:finance/features/category/data/repository/category_repository_impl.dart';
 import 'package:finance/features/category/domain/repository/category_repository.dart';
 import 'package:finance/features/category/domain/usecases/get_top_categories.dart';
+import 'package:finance/features/settings/data/datasource/local/settings_local_datasource.dart';
+import 'package:finance/features/settings/data/model/app_settings_model.dart';
+import 'package:finance/features/settings/data/repository/settings_repository_impl.dart';
+import 'package:finance/features/settings/domain/repository/settings_repository.dart';
+import 'package:finance/features/settings/domain/usecase/get_settings.dart';
+import 'package:finance/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:finance/features/stats/presentation/bloc/stats_bloc.dart';
 import 'package:finance/features/transactions/data/datasource/transaction_local_datasource.dart';
 import 'package:finance/features/transactions/data/model/transaction_model.dart';
@@ -28,11 +34,13 @@ Future<void> setup() async {
   await openAndRegisterBoxes(hiveService);
   List<String> categoryIds = await setUpCategories();
   await setUpTransactions(categoryIds);
+  await setUpSettings();
 
   getIt.registerFactory<StatsBloc>(() => StatsBloc(getIt<GetTopCategories>()));
   getIt.registerFactory<TransactionsBloc>(
     () => TransactionsBloc(getIt<GetAllTransactions>()),
   );
+  getIt.registerFactory<SettingsBloc>(() => SettingsBloc(getIt<GetSettings>()));
 }
 
 Future<void> openAndRegisterBoxes(HiveService hiveService) async {
@@ -45,6 +53,27 @@ Future<void> openAndRegisterBoxes(HiveService hiveService) async {
     HiveBoxNames.transactions,
   );
   getIt.registerSingleton<Box<TransactionModel>>(transactionBox);
+
+  final settingsBox = await hiveService.openBox<AppSettingsModel>(
+    HiveBoxNames.settings,
+  );
+  getIt.registerSingleton<Box<AppSettingsModel>>(settingsBox);
+}
+
+Future<void> setUpSettings() async {
+  Box<AppSettingsModel> settingsBox = getIt<Box<AppSettingsModel>>();
+
+  getIt.registerLazySingleton<SettingsLocalDatasource>(
+    () => SettingsLocalDatasource(settingsBox),
+  );
+
+  getIt.registerLazySingleton<SettingsRepository>(
+    () => SettingsRepositoryImpl(getIt<SettingsLocalDatasource>()),
+  );
+
+  getIt.registerLazySingleton<GetSettings>(
+    () => GetSettings(getIt<SettingsRepository>()),
+  );
 }
 
 Future<void> setUpTransactions(List<String> categoryIds) async {

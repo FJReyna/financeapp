@@ -1,9 +1,10 @@
+import 'package:finance/core/database/hive_type_id.dart';
 import 'package:finance/features/transactions/domain/entitites/transaction.dart';
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 
 part 'transaction_model.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: HiveTypeId.transaction)
 class TransactionModel {
   @HiveField(0)
   final String id;
