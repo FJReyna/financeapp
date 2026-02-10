@@ -8,7 +8,8 @@ part 'app_settings_model.g.dart';
 @HiveType(typeId: HiveTypeId.appSettings)
 class AppSettingsModel {
   @HiveField(0)
-  final ThemeMode themeMode;
+  final int themeMode;
+
   @HiveField(1)
   final String currency;
 
@@ -16,12 +17,15 @@ class AppSettingsModel {
 
   factory AppSettingsModel.fromEntity(AppSettings settings) {
     return AppSettingsModel(
-      themeMode: settings.themeMode,
+      themeMode: settings.themeMode.index,
       currency: settings.currency,
     );
   }
 
   AppSettings toEntity() {
-    return AppSettings(themeMode: themeMode, currency: currency);
+    return AppSettings(
+      themeMode: ThemeMode.values[themeMode],
+      currency: currency,
+    );
   }
 }

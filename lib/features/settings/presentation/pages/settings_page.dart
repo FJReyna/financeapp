@@ -1,7 +1,14 @@
+import 'package:finance/core/util/currencies.dart';
+import 'package:finance/core/util/extensions.dart';
 import 'package:finance/core/widgets/bottom_nav_bar.dart';
+import 'package:finance/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:finance/features/settings/presentation/bloc/settings_event.dart';
+import 'package:finance/features/settings/presentation/bloc/settings_state.dart';
 import 'package:finance/features/settings/presentation/widgets/section_container.dart';
 import 'package:finance/features/settings/presentation/widgets/section_item.dart';
+import 'package:finance/features/settings/presentation/widgets/section_item_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -11,71 +18,115 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Settings')),
-      body: ListView(
-        children: [
-          SectionContainer(
-            title: 'Preferences',
-            items: [
-              SectionItem(
-                icon: FontAwesomeIcons.moneyBill1,
-                title: 'Currency',
-                subtitle: 'USD (\$)',
-                iconColor: Colors.amber,
+      body: BlocBuilder<SettingsBloc, SettingsState>(
+        builder: (BuildContext context, SettingsState state) {
+          return ListView(
+            children: [
+              SectionContainer(
+                title: 'Preferences',
+                items: [
+                  SectionItemDropdown<String>(
+                    icon: FontAwesomeIcons.moneyBill1,
+                    title: 'Currency',
+                    subtitle: 'USD (\$)',
+                    iconColor: Colors.amber,
+                    value: state.settings?.currency ?? 'USD',
+                    items: Currencies.list.map((currency) {
+                      return DropdownMenuItem(
+                        value: currency,
+                        child: Text(
+                          currency,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (String? currency) {
+                      if (currency != null) {
+                        context.read<SettingsBloc>().add(
+                          ChangeCurrencyEvent(currency),
+                        );
+                      }
+                    },
+                  ),
+                  Divider(height: 1, thickness: 1, indent: 16, endIndent: 16),
+                  SectionItemDropdown<ThemeMode>(
+                    icon: FontAwesomeIcons.moon,
+                    title: 'Theme',
+                    subtitle: 'Dark Mode',
+                    iconColor: Colors.indigo,
+                    value: state.settings!.themeMode,
+                    items: ThemeMode.values.map((mode) {
+                      return DropdownMenuItem(
+                        value: mode,
+                        child: Text(
+                          mode.toString().split('.').last.capitalize(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (ThemeMode? mode) {
+                      if (mode != null) {
+                        context.read<SettingsBloc>().add(
+                          ChangeThemeEvent(mode),
+                        );
+                      }
+                    },
+                  ),
+                  Divider(height: 1, thickness: 1, indent: 16, endIndent: 16),
+                  SectionItem(
+                    icon: FontAwesomeIcons.language,
+                    title: 'Language',
+                    subtitle: 'English',
+                    iconColor: Colors.purple,
+                  ),
+                ],
               ),
-              Divider(height: 1, thickness: 1, indent: 16, endIndent: 16),
-              SectionItem(
-                icon: FontAwesomeIcons.moon,
-                title: 'Theme',
-                subtitle: 'Dark Mode',
-                iconColor: Colors.indigo,
+              SizedBox(height: 24),
+              SectionContainer(
+                title: 'Security',
+                items: [
+                  SectionItem(
+                    icon: FontAwesomeIcons.fingerprint,
+                    title: 'Face ID & Touch ID',
+                    subtitle: '',
+                    iconColor: Colors.green,
+                  ),
+                  Divider(height: 1, thickness: 1, indent: 16, endIndent: 16),
+                  SectionItem(
+                    icon: FontAwesomeIcons.lock,
+                    title: 'PIN',
+                    subtitle: '',
+                    iconColor: Colors.red,
+                  ),
+                ],
               ),
-              Divider(height: 1, thickness: 1, indent: 16, endIndent: 16),
-              SectionItem(
-                icon: FontAwesomeIcons.language,
-                title: 'Language',
-                subtitle: 'English',
-                iconColor: Colors.purple,
+              SizedBox(height: 24),
+              SectionContainer(
+                title: 'Data',
+                items: [
+                  SectionItem(
+                    icon: FontAwesomeIcons.fileExport,
+                    title: 'Export Data',
+                    subtitle: '',
+                    iconColor: Colors.orange,
+                  ),
+                  SectionItem(
+                    icon: FontAwesomeIcons.cloud,
+                    title: 'Cloud Sync',
+                    subtitle: '',
+                    iconColor: Colors.blue,
+                  ),
+                ],
               ),
             ],
-          ),
-          SizedBox(height: 24),
-          SectionContainer(
-            title: 'Security',
-            items: [
-              SectionItem(
-                icon: FontAwesomeIcons.fingerprint,
-                title: 'Face ID & Touch ID',
-                subtitle: '',
-                iconColor: Colors.green,
-              ),
-              Divider(height: 1, thickness: 1, indent: 16, endIndent: 16),
-              SectionItem(
-                icon: FontAwesomeIcons.lock,
-                title: 'PIN',
-                subtitle: '',
-                iconColor: Colors.red,
-              ),
-            ],
-          ),
-          SizedBox(height: 24),
-          SectionContainer(
-            title: 'Data',
-            items: [
-              SectionItem(
-                icon: FontAwesomeIcons.fileExport,
-                title: 'Export Data',
-                subtitle: '',
-                iconColor: Colors.orange,
-              ),
-              SectionItem(
-                icon: FontAwesomeIcons.cloud,
-                title: 'Cloud Sync',
-                subtitle: '',
-                iconColor: Colors.blue,
-              ),
-            ],
-          ),
-        ],
+          );
+        },
       ),
       bottomNavigationBar: Hero(
         tag: 'bottom_nav_bar',
