@@ -18,6 +18,7 @@ import 'package:finance/features/transactions/data/datasource/transaction_local_
 import 'package:finance/features/transactions/data/model/transaction_model.dart';
 import 'package:finance/features/transactions/data/repository/transaction_repository_impl.dart';
 import 'package:finance/features/transactions/domain/repository/transaction_repository.dart';
+import 'package:finance/features/transactions/domain/usecase/add_transaction.dart';
 import 'package:finance/features/transactions/domain/usecase/get_all_transactions.dart';
 import 'package:finance/features/transactions/presentation/bloc/categories/categories_bloc.dart';
 import 'package:finance/features/transactions/presentation/bloc/transactions/transactions_bloc.dart';
@@ -40,8 +41,8 @@ Future<void> setup() async {
   await setUpSettings();
 
   getIt.registerFactory<StatsBloc>(() => StatsBloc(getIt<GetTopCategories>()));
-  getIt.registerFactory<TransactionsBloc>(
-    () => TransactionsBloc(getIt<GetAllTransactions>()),
+  getIt.registerSingleton<TransactionsBloc>(
+    TransactionsBloc(getIt<GetAllTransactions>(), getIt<AddTransaction>()),
   );
   getIt.registerFactory<SettingsBloc>(
     () => SettingsBloc(getIt<GetSettings>(), getIt<SaveSettings>()),
@@ -113,6 +114,10 @@ Future<void> setUpTransactions(List<String> categoryIds) async {
       getIt<TransactionRepository>(),
       getIt<CategoryRepository>(),
     ),
+  );
+
+  getIt.registerLazySingleton<AddTransaction>(
+    () => AddTransaction(getIt<TransactionRepository>()),
   );
 }
 

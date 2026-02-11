@@ -1,4 +1,5 @@
 import 'package:finance/features/transactions/data/datasource/transaction_local_datasource.dart';
+import 'package:finance/features/transactions/data/model/transaction_model.dart';
 import 'package:finance/features/transactions/domain/entities/transaction.dart';
 import 'package:finance/features/transactions/domain/repository/transaction_repository.dart';
 
@@ -8,9 +9,8 @@ class TransactionRepositoryImpl implements TransactionRepository {
   TransactionRepositoryImpl({required this.localDatasource});
 
   @override
-  Future<void> addTransaction(Transaction transaction) {
-    // TODO: implement addTransaction
-    throw UnimplementedError();
+  Future<void> addTransaction(Transaction transaction) async {
+    await localDatasource.add(TransactionModel.fromEntity(transaction));
   }
 
   @override

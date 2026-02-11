@@ -50,70 +50,81 @@ class TransactionsPage extends StatelessWidget {
     return BlocProvider<TransactionsBloc>(
       create: (context) =>
           getIt<TransactionsBloc>()..add(GetTransactionsWithCategoryEvent()),
-      child: Scaffold(
-        appBar: AppBar(title: const Text('Transactions')),
-        body: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: BlocBuilder<TransactionsBloc, TransactionsState>(
-            builder: (context, state) {
-              if (state.status == TransactionsStatus.loading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state.status == TransactionsStatus.failure) {
-                return Center(child: Text(state.errorMessage ?? 'Error'));
-              } else if (state.status == TransactionsStatus.success) {
-                if (state.transactions.isEmpty) {
-                  return const Center(child: Text('No transactions found'));
-                }
-                final groupedTransactions = _groupTransactionsByDate(
-                  state.transactions,
-                );
-                return ListView.builder(
-                  itemCount: groupedTransactions.length,
-                  itemBuilder: (context, index) {
-                    final entry = groupedTransactions.entries.elementAt(index);
-                    final dateLabel = entry.key;
-                    final transactions = entry.value;
+      child: BlocListener<TransactionsBloc, TransactionsState>(
+        listener: (context, state) {
+          if (state.status == TransactionsStatus.submited) {
+            context.read<TransactionsBloc>().add(
+              GetTransactionsWithCategoryEvent(),
+            );
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(title: const Text('Transactions')),
+          body: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: BlocBuilder<TransactionsBloc, TransactionsState>(
+              builder: (context, state) {
+                if (state.status == TransactionsStatus.loading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state.status == TransactionsStatus.failure) {
+                  return Center(child: Text(state.errorMessage ?? 'Error'));
+                } else if (state.status == TransactionsStatus.success) {
+                  if (state.transactions.isEmpty) {
+                    return const Center(child: Text('No transactions found'));
+                  }
+                  final groupedTransactions = _groupTransactionsByDate(
+                    state.transactions,
+                  );
+                  return ListView.builder(
+                    itemCount: groupedTransactions.length,
+                    itemBuilder: (context, index) {
+                      final entry = groupedTransactions.entries.elementAt(
+                        index,
+                      );
+                      final dateLabel = entry.key;
+                      final transactions = entry.value;
 
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 4.0,
-                            vertical: 8.0,
-                          ),
-                          child: Text(
-                            dateLabel,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 4.0,
+                              vertical: 8.0,
+                            ),
+                            child: Text(
+                              dateLabel,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        ...transactions.map(
-                          (transaction) =>
-                              TransactionCard(transaction: transaction),
-                        ),
-                        const SizedBox(height: 8),
-                      ],
-                    );
-                  },
-                );
-              } else {
-                return const SizedBox.shrink();
-              }
-            },
+                          ...transactions.map(
+                            (transaction) =>
+                                TransactionCard(transaction: transaction),
+                          ),
+                          const SizedBox(height: 8),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  return const SizedBox.shrink();
+                }
+              },
+            ),
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            context.push(addTransactionRoute);
-          },
-          child: const Icon(FontAwesomeIcons.plus),
-        ),
-        bottomNavigationBar: Hero(
-          tag: 'bottom_nav_bar',
-          child: BottomNavBar(currentIndex: 1),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              context.push(addTransactionRoute);
+            },
+            child: const Icon(FontAwesomeIcons.plus),
+          ),
+          bottomNavigationBar: Hero(
+            tag: 'bottom_nav_bar',
+            child: BottomNavBar(currentIndex: 1),
+          ),
         ),
       ),
     );

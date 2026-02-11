@@ -19,6 +19,7 @@ class CategoriesState {
     CategoriesStatus? status,
     List<Category>? categories,
     String? errorMessage,
+    String? successMessage,
   }) {
     return CategoriesState._(
       status: status ?? this.status,

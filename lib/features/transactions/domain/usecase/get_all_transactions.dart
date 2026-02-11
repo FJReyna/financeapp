@@ -34,6 +34,9 @@ class GetAllTransactions extends UseCase<List<TransactionWithCategory>, Null> {
         transactionsWithCategory.add(
           TransactionWithCategory(transaction: transaction, category: category),
         );
+        transactionsWithCategory.sort(
+          (a, b) => b.transaction.date.compareTo(a.transaction.date),
+        );
       }
       return Right(transactionsWithCategory.toList());
     } catch (e) {
