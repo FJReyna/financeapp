@@ -1,4 +1,5 @@
 import 'package:finance/core/routes/routes.dart';
+import 'package:finance/core/util/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -11,22 +12,22 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      items: const [
+      items: [
         BottomNavigationBarItem(
           icon: Icon(FontAwesomeIcons.house),
-          label: 'Home',
+          label: context.translate.navbarHome,
         ),
         BottomNavigationBarItem(
           icon: Icon(FontAwesomeIcons.moneyBillTransfer),
-          label: 'Transactions',
+          label: context.translate.navbarTransactions,
         ),
         BottomNavigationBarItem(
           icon: Icon(FontAwesomeIcons.chartBar),
-          label: 'Stats',
+          label: context.translate.navbarStats,
         ),
         BottomNavigationBarItem(
           icon: Icon(FontAwesomeIcons.gear),
-          label: 'Settings',
+          label: context.translate.navbarSettings,
         ),
       ],
       currentIndex: currentIndex,

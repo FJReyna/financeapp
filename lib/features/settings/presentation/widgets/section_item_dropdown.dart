@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class SectionItemDropdown<T> extends StatelessWidget {
   final IconData icon;
   final String title;
-  final String subtitle;
   final Color iconColor;
   final T value;
   final List<DropdownMenuItem<T>> items;
@@ -13,7 +12,6 @@ class SectionItemDropdown<T> extends StatelessWidget {
     super.key,
     required this.icon,
     required this.title,
-    required this.subtitle,
     required this.iconColor,
     required this.value,
     required this.items,

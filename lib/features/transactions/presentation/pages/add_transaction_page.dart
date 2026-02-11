@@ -1,3 +1,4 @@
+import 'package:finance/core/util/extensions.dart';
 import 'package:finance/core/widgets/bottom_nav_bar.dart';
 import 'package:finance/features/transactions/presentation/widgets/transaction_form.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class AddTransactionPage extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Add Transaction'),
+        title: Text(context.translate.addTransactionTitle),
         leading: IconButton(
           onPressed: () {
             context.pop();

@@ -1,5 +1,6 @@
 import 'package:finance/core/dependency_injection.dart';
 import 'package:finance/core/routes/routes.dart';
+import 'package:finance/core/util/extensions.dart';
 import 'package:finance/core/widgets/bottom_nav_bar.dart';
 import 'package:finance/features/transactions/domain/entities/transaction_with_category.dart';
 import 'package:finance/features/transactions/presentation/bloc/transactions/transactions_bloc.dart';
@@ -17,6 +18,7 @@ class TransactionsPage extends StatelessWidget {
 
   Map<String, List<TransactionWithCategory>> _groupTransactionsByDate(
     List<TransactionWithCategory> transactions,
+    BuildContext context,
   ) {
     final grouped = <String, List<TransactionWithCategory>>{};
     final now = DateTime.now();
@@ -32,11 +34,14 @@ class TransactionsPage extends StatelessWidget {
 
       String key;
       if (transactionDate == today) {
-        key = 'Today';
+        key = context.translate.today;
       } else if (transactionDate == yesterday) {
-        key = 'Yesterday';
+        key = context.translate.yesterday;
       } else {
-        key = DateFormat('MMMM dd, yyyy').format(transactionDate);
+        key = DateFormat(
+          'MMMM dd, yyyy',
+          context.locale.toString(),
+        ).format(transactionDate).capitalize();
       }
 
       grouped.putIfAbsent(key, () => []).add(transaction);
@@ -59,7 +64,7 @@ class TransactionsPage extends StatelessWidget {
           }
         },
         child: Scaffold(
-          appBar: AppBar(title: const Text('Transactions')),
+          appBar: AppBar(title: Text(context.translate.transactionsTitle)),
           body: Padding(
             padding: const EdgeInsets.all(12.0),
             child: BlocBuilder<TransactionsBloc, TransactionsState>(
@@ -74,6 +79,7 @@ class TransactionsPage extends StatelessWidget {
                   }
                   final groupedTransactions = _groupTransactionsByDate(
                     state.transactions,
+                    context,
                   );
                   return ListView.builder(
                     itemCount: groupedTransactions.length,

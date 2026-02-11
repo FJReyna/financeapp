@@ -1,3 +1,4 @@
+import 'package:finance/core/util/extensions.dart';
 import 'package:finance/core/widgets/bottom_nav_bar.dart';
 import 'package:finance/features/stats/presentation/widgets/bar_chart_stats.dart';
 import 'package:finance/features/stats/presentation/widgets/stats_tab.dart';
@@ -13,12 +14,12 @@ class StatisticsPage extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Statistics'),
-          bottom: const TabBar(
+          title: Text(context.translate.statisticsTitle),
+          bottom: TabBar(
             tabs: [
-              Tab(text: 'Week'),
-              Tab(text: 'Month'),
-              Tab(text: 'Year'),
+              Tab(text: context.translate.week),
+              Tab(text: context.translate.month),
+              Tab(text: context.translate.year),
             ],
           ),
         ),

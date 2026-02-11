@@ -17,7 +17,7 @@ class Dashboard extends StatelessWidget {
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(context.translate.welcomeTitle),
+        title: Text(context.translate.dashboardWelcomeTitle),
         actions: [
           IconButton(onPressed: () {}, icon: Icon(FontAwesomeIcons.bell)),
         ],
@@ -33,7 +33,7 @@ class Dashboard extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Quick Summary',
+                context.translate.dashboardQuickSummary,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),

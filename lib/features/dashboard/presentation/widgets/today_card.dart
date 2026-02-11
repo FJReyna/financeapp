@@ -1,3 +1,4 @@
+import 'package:finance/core/util/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -17,7 +18,10 @@ class TodayCard extends StatelessWidget {
               children: [
                 Icon(FontAwesomeIcons.calendar, size: 20, color: Colors.orange),
                 SizedBox(width: 8),
-                Text('Today', style: Theme.of(context).textTheme.bodyLarge),
+                Text(
+                  context.translate.today,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
               ],
             ),
             const SizedBox(height: 8),

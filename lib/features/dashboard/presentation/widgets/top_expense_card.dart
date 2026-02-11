@@ -1,4 +1,5 @@
 import 'package:finance/core/theme/app_colors.dart';
+import 'package:finance/core/util/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -22,9 +23,12 @@ class TopExpenseCard extends StatelessWidget {
                   color: AppColors.secondary,
                 ),
                 SizedBox(width: 8),
-                Text(
-                  'Top Expense',
-                  style: Theme.of(context).textTheme.bodyLarge,
+                Expanded(
+                  child: Text(
+                    context.translate.topExpense,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ],
             ),

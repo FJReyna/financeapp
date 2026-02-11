@@ -18,18 +18,17 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: AppBar(title: Text(context.translate.settingsTitle)),
       body: BlocBuilder<SettingsBloc, SettingsState>(
         builder: (BuildContext context, SettingsState state) {
           return ListView(
             children: [
               SectionContainer(
-                title: 'Preferences',
+                title: context.translate.settingsPreferences,
                 items: [
                   SectionItemDropdown<String>(
                     icon: FontAwesomeIcons.moneyBill1,
-                    title: 'Currency',
-                    subtitle: 'USD (\$)',
+                    title: context.translate.settingsCurrency,
                     iconColor: Colors.amber,
                     value: state.settings?.currency ?? 'USD',
                     items: Currencies.list.map((currency) {
@@ -55,15 +54,14 @@ class SettingsPage extends StatelessWidget {
                   Divider(height: 1, thickness: 1, indent: 16, endIndent: 16),
                   SectionItemDropdown<ThemeMode>(
                     icon: FontAwesomeIcons.moon,
-                    title: 'Theme',
-                    subtitle: 'Dark Mode',
+                    title: context.translate.settingsTheme,
                     iconColor: Colors.indigo,
                     value: state.settings!.themeMode,
                     items: ThemeMode.values.map((mode) {
                       return DropdownMenuItem(
                         value: mode,
                         child: Text(
-                          mode.toString().split('.').last.capitalize(),
+                          mode.localize(context).capitalize(),
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
@@ -82,8 +80,7 @@ class SettingsPage extends StatelessWidget {
                   Divider(height: 1, thickness: 1, indent: 16, endIndent: 16),
                   SectionItemDropdown<String>(
                     icon: FontAwesomeIcons.language,
-                    title: 'Language',
-                    subtitle: 'English',
+                    title: context.translate.settingsLanguage,
                     iconColor: Colors.purple,
                     value: state.settings?.locale ?? 'en',
                     items: AppLocalizations.supportedLocales.map((locale) {
@@ -112,7 +109,7 @@ class SettingsPage extends StatelessWidget {
               ),
               SizedBox(height: 24),
               SectionContainer(
-                title: 'Security',
+                title: context.translate.settingsSecurity,
                 items: [
                   SectionItem(
                     icon: FontAwesomeIcons.fingerprint,
@@ -131,17 +128,23 @@ class SettingsPage extends StatelessWidget {
               ),
               SizedBox(height: 24),
               SectionContainer(
-                title: 'Data',
+                title: context.translate.settingsData,
                 items: [
                   SectionItem(
                     icon: FontAwesomeIcons.fileExport,
-                    title: 'Export Data',
+                    title: context.translate.settingsExportData,
                     subtitle: '',
                     iconColor: Colors.orange,
                   ),
                   SectionItem(
+                    icon: FontAwesomeIcons.fileImport,
+                    title: context.translate.settingsImportData,
+                    subtitle: '',
+                    iconColor: Colors.pink,
+                  ),
+                  SectionItem(
                     icon: FontAwesomeIcons.cloud,
-                    title: 'Cloud Sync',
+                    title: context.translate.settingsSyncData,
                     subtitle: '',
                     iconColor: Colors.blue,
                   ),

@@ -1,4 +1,5 @@
 import 'package:finance/core/dependency_injection.dart';
+import 'package:finance/core/util/extensions.dart';
 import 'package:finance/features/stats/presentation/bloc/stats_bloc.dart';
 import 'package:finance/features/stats/presentation/bloc/stats_event.dart';
 import 'package:finance/features/stats/presentation/bloc/stats_state.dart';
@@ -12,6 +13,17 @@ class StatsTab extends StatelessWidget {
 
   const StatsTab({super.key, this.type = BarChartType.week});
 
+  String _getTotalSpentText(BarChartType type, BuildContext context) {
+    switch (type) {
+      case BarChartType.week:
+        return context.translate.week;
+      case BarChartType.month:
+        return context.translate.month;
+      case BarChartType.year:
+        return context.translate.year;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<StatsBloc>(
@@ -23,7 +35,7 @@ class StatsTab extends StatelessWidget {
           Column(
             children: [
               Text(
-                'Total spent this ${type.name}',
+                '${context.translate.statisticsTotalSpent} ${_getTotalSpentText(type, context).toLowerCase()}',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               Text(
@@ -38,7 +50,7 @@ class StatsTab extends StatelessWidget {
           BarCharStats(type: type),
           SizedBox(height: 16),
           Text(
-            'Top categories',
+            context.translate.statisticsTopCategories,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           SizedBox(height: 16),

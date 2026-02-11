@@ -1,8 +1,10 @@
+import 'package:finance/core/util/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 class TransactionDatePicker extends StatefulWidget {
-  final ValueChanged<DateTime>? onDateSelected;
+  final ValueChanged<DateTime?>? onDateSelected;
 
   const TransactionDatePicker({super.key, this.onDateSelected});
 
@@ -12,12 +14,13 @@ class TransactionDatePicker extends StatefulWidget {
 
 class _TransactionDatePickerState extends State<TransactionDatePicker> {
   DateTime initial = DateTime.now();
+  DateTime? selected;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        DateTime? selected = await showDatePicker(
+        selected = await showDatePicker(
           context: context,
           initialDate: initial,
           firstDate: DateTime(2000),
@@ -26,7 +29,7 @@ class _TransactionDatePickerState extends State<TransactionDatePicker> {
         if (selected != null && widget.onDateSelected != null) {
           widget.onDateSelected!(selected);
           setState(() {
-            initial = selected;
+            initial = selected!;
           });
         }
       },
@@ -59,9 +62,15 @@ class _TransactionDatePickerState extends State<TransactionDatePicker> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Date', style: Theme.of(context).textTheme.bodySmall),
                     Text(
-                      '${initial.day.toString().padLeft(2, '0')}/${initial.month.toString().padLeft(2, '0')}/${initial.year}',
+                      context.translate.date,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    Text(
+                      DateFormat(
+                        'MMMM dd, yyyy',
+                        context.locale.toString(),
+                      ).format(selected ?? initial).capitalize(),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ],

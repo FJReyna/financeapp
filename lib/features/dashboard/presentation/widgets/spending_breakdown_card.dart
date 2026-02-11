@@ -1,3 +1,4 @@
+import 'package:finance/core/util/extensions.dart';
 import 'package:finance/features/dashboard/presentation/widgets/category_breakdown_linear_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -18,7 +19,7 @@ class SpendingBreakdownCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Spending Breakdown',
+              context.translate.dashboardSpendingBreakdown,
               style: Theme.of(
                 context,
               ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),

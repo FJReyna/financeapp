@@ -10,6 +10,20 @@ extension StringExtensions on String {
 
 extension Translate on BuildContext {
   AppLocalizations get translate => AppLocalizations.of(this)!;
+  Locale get locale => Localizations.localeOf(this);
+}
+
+extension Localize on ThemeMode {
+  String localize(BuildContext context) {
+    switch (this) {
+      case ThemeMode.system:
+        return context.translate.settingsThemeSystem;
+      case ThemeMode.light:
+        return context.translate.settingsThemeLight;
+      case ThemeMode.dark:
+        return context.translate.settingsThemeDark;
+    }
+  }
 }
 
 extension Language on Locale {

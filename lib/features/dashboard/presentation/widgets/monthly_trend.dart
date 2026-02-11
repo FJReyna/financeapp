@@ -1,4 +1,5 @@
 import 'package:finance/core/theme/app_colors.dart';
+import 'package:finance/core/util/extensions.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -120,7 +121,7 @@ class MonthlyTrend extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Monthly Trend',
+              context.translate.dashboardMonthlyTrend,
               style: Theme.of(
                 context,
               ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),

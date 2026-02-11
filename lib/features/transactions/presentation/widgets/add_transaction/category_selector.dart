@@ -1,4 +1,5 @@
 import 'package:finance/core/dependency_injection.dart';
+import 'package:finance/core/util/extensions.dart';
 import 'package:finance/features/transactions/presentation/bloc/categories/categories_bloc.dart';
 import 'package:finance/features/transactions/presentation/bloc/categories/categories_event.dart';
 import 'package:finance/features/transactions/presentation/bloc/categories/categories_state.dart';
@@ -26,7 +27,7 @@ class _CategorySelectorState extends State<CategorySelector> {
       initialValue: widget.selectedCategoryId,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please select a category';
+          return context.translate.categorySelectorValidatorError;
         }
         return null;
       },
@@ -49,7 +50,7 @@ class _CategorySelectorState extends State<CategorySelector> {
                         vertical: 8,
                       ),
                       child: Text(
-                        'Category',
+                        context.translate.categorySelectorTitle,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),

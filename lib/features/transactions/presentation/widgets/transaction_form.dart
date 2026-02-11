@@ -1,4 +1,5 @@
 import 'package:finance/core/dependency_injection.dart';
+import 'package:finance/core/util/extensions.dart';
 import 'package:finance/core/util/validators.dart';
 import 'package:finance/features/transactions/domain/entities/transaction.dart';
 import 'package:finance/features/transactions/presentation/bloc/transactions/transactions_bloc.dart';
@@ -46,14 +47,16 @@ class _TransactionFormState extends State<TransactionForm> {
           if (state.status == TransactionsStatus.failure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage ?? 'An error occurred'),
+                content: Text(
+                  state.errorMessage ?? context.translate.addTransactionError,
+                ),
                 backgroundColor: Theme.of(context).colorScheme.error,
               ),
             );
           } else if (state.status == TransactionsStatus.success) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Transaction added successfully!'),
+                content: Text(context.translate.addTransactionSuccess),
                 backgroundColor: Theme.of(context).colorScheme.primary,
               ),
             );
@@ -79,7 +82,8 @@ class _TransactionFormState extends State<TransactionForm> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: TextFormField(
                   controller: _titleController,
-                  validator: (value) => Validators.validateNotEmpty(value),
+                  validator: (value) =>
+                      Validators.validateNotEmpty(value, context),
                   keyboardType: TextInputType.text,
                   style: Theme.of(context).textTheme.bodyMedium,
                   decoration: InputDecoration(
@@ -99,13 +103,13 @@ class _TransactionFormState extends State<TransactionForm> {
                     ),
                     fillColor: Theme.of(context).cardTheme.color,
                     filled: true,
-                    hintText: 'Add a title',
+                    hintText: context.translate.addTransactionTitleHint,
                   ),
                 ),
               ),
               SizedBox(height: 8.0),
               Text(
-                'AMOUNT',
+                context.translate.addTransactionAmountHint.toUpperCase(),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
@@ -116,7 +120,8 @@ class _TransactionFormState extends State<TransactionForm> {
                   controller: _amountController,
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
-                  validator: (value) => Validators.validateAmount(value),
+                  validator: (value) =>
+                      Validators.validateAmount(value, context),
                   style: Theme.of(context).textTheme.displayMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -140,8 +145,10 @@ class _TransactionFormState extends State<TransactionForm> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TransactionDatePicker(
-                  onDateSelected: (date) {
-                    selectedDate = date;
+                  onDateSelected: (DateTime? date) {
+                    if (date != null) {
+                      selectedDate = date;
+                    }
                   },
                 ),
               ),
@@ -171,7 +178,7 @@ class _TransactionFormState extends State<TransactionForm> {
                     ),
                     fillColor: Theme.of(context).cardTheme.color,
                     filled: true,
-                    hintText: 'Add a description (Optional)',
+                    hintText: context.translate.addTransactionDescriptionHint,
                   ),
                 ),
               ),
@@ -204,7 +211,7 @@ class _TransactionFormState extends State<TransactionForm> {
                               }
                             },
                             icon: Icon(FontAwesomeIcons.floppyDisk),
-                            label: Text('Save'),
+                            label: Text(context.translate.save),
                             style: ElevatedButton.styleFrom(
                               minimumSize: Size(double.infinity, 48),
                               shape: RoundedRectangleBorder(

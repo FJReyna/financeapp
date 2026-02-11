@@ -1,18 +1,21 @@
+import 'package:finance/core/util/extensions.dart';
+import 'package:flutter/material.dart';
+
 class Validators {
-  static String? validateNotEmpty(String? value) {
+  static String? validateNotEmpty(String? value, BuildContext context) {
     if (value == null || value.trim().isEmpty) {
-      return 'This field cannot be empty';
+      return context.translate.emptyFieldError;
     }
     return null;
   }
 
-  static String? validateAmount(String? value) {
+  static String? validateAmount(String? value, BuildContext context) {
     if (value == null || value.trim().isEmpty) {
-      return 'Amount cannot be empty';
+      return context.translate.emptyAmountError;
     }
     final amount = double.tryParse(value);
     if (amount == null || amount <= 0) {
-      return 'Please enter a valid amount greater than zero';
+      return context.translate.validAmountError;
     }
     return null;
   }

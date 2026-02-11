@@ -1,3 +1,4 @@
+import 'package:finance/core/util/extensions.dart';
 import 'package:finance/features/transactions/domain/entities/transaction.dart';
 import 'package:flutter/material.dart';
 
@@ -77,7 +78,7 @@ class _TransactionTypeSwitchState extends State<TransactionTypeSwitch>
                   )!,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8.0),
-                    child: Text('Expense'),
+                    child: Text(context.translate.expenses),
                   ),
                 ),
                 Align(
@@ -88,7 +89,7 @@ class _TransactionTypeSwitchState extends State<TransactionTypeSwitch>
                   )!,
                   child: Padding(
                     padding: const EdgeInsets.only(right: 8.0),
-                    child: Text('Income'),
+                    child: Text(context.translate.income),
                   ),
                 ),
                 Align(
@@ -129,8 +130,8 @@ class _TransactionTypeSwitchState extends State<TransactionTypeSwitch>
                       child: Center(
                         child: Text(
                           widget.transactionType == TransactionType.income
-                              ? 'Income'
-                              : 'Expense',
+                              ? context.translate.income
+                              : context.translate.expenses,
                           style: TextStyle(
                             color:
                                 widget.transactionType == TransactionType.income

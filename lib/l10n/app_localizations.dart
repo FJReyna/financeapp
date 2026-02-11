@@ -98,11 +98,287 @@ abstract class AppLocalizations {
     Locale('es'),
   ];
 
-  /// No description provided for @welcomeTitle.
+  /// No description provided for @income.
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
+  String get income;
+
+  /// No description provided for @expenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get expenses;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get yesterday;
+
+  /// No description provided for @week.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get week;
+
+  /// No description provided for @month.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get month;
+
+  /// No description provided for @year.
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get year;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @emptyFieldError.
+  ///
+  /// In en, this message translates to:
+  /// **'This field cannot be empty'**
+  String get emptyFieldError;
+
+  /// No description provided for @emptyAmountError.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount cannot be empty'**
+  String get emptyAmountError;
+
+  /// No description provided for @validAmountError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid amount greater than zero'**
+  String get validAmountError;
+
+  /// No description provided for @topExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Expense'**
+  String get topExpense;
+
+  /// No description provided for @navbarHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get navbarHome;
+
+  /// No description provided for @navbarTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get navbarTransactions;
+
+  /// No description provided for @navbarStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Stats'**
+  String get navbarStats;
+
+  /// No description provided for @navbarSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get navbarSettings;
+
+  /// No description provided for @dashboardWelcomeTitle.
   ///
   /// In en, this message translates to:
   /// **'Welcome'**
-  String get welcomeTitle;
+  String get dashboardWelcomeTitle;
+
+  /// No description provided for @dashboardTotalBlance.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Balance'**
+  String get dashboardTotalBlance;
+
+  /// No description provided for @dashboardQuickSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Summary'**
+  String get dashboardQuickSummary;
+
+  /// No description provided for @dashboardSpendingBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Spending Breakdown'**
+  String get dashboardSpendingBreakdown;
+
+  /// No description provided for @dashboardMonthlyTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Trend'**
+  String get dashboardMonthlyTrend;
+
+  /// No description provided for @transactionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get transactionsTitle;
+
+  /// No description provided for @addTransactionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Transaction'**
+  String get addTransactionTitle;
+
+  /// No description provided for @addTransactionSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction added successfully'**
+  String get addTransactionSuccess;
+
+  /// No description provided for @addTransactionError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to add transaction. Please try again.'**
+  String get addTransactionError;
+
+  /// No description provided for @addTransactionTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a title'**
+  String get addTransactionTitleHint;
+
+  /// No description provided for @addTransactionAmountHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get addTransactionAmountHint;
+
+  /// No description provided for @categorySelectorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get categorySelectorTitle;
+
+  /// No description provided for @categorySelectorValidatorError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a category'**
+  String get categorySelectorValidatorError;
+
+  /// No description provided for @addTransactionDescriptionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a description (optional)'**
+  String get addTransactionDescriptionHint;
+
+  /// No description provided for @statisticsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Statistics'**
+  String get statisticsTitle;
+
+  /// No description provided for @statisticsTotalSpent.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Spent this'**
+  String get statisticsTotalSpent;
+
+  /// No description provided for @statisticsTopCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Categories'**
+  String get statisticsTopCategories;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get settingsPreferences;
+
+  /// No description provided for @settingsLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settingsLanguage;
+
+  /// No description provided for @settingsCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get settingsCurrency;
+
+  /// No description provided for @settingsTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get settingsTheme;
+
+  /// No description provided for @settingsThemeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get settingsThemeLight;
+
+  /// No description provided for @settingsThemeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get settingsThemeDark;
+
+  /// No description provided for @settingsThemeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get settingsThemeSystem;
+
+  /// No description provided for @settingsSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get settingsSecurity;
+
+  /// No description provided for @settingsData.
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get settingsData;
+
+  /// No description provided for @settingsExportData.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Data'**
+  String get settingsExportData;
+
+  /// No description provided for @settingsImportData.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Data'**
+  String get settingsImportData;
+
+  /// No description provided for @settingsSyncData.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloud Sync'**
+  String get settingsSyncData;
 }
 
 class _AppLocalizationsDelegate

@@ -1,4 +1,5 @@
 import 'package:finance/core/theme/app_colors.dart';
+import 'package:finance/core/util/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -14,7 +15,10 @@ class TotalBalanceCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('Total Balance', style: Theme.of(context).textTheme.bodyLarge),
+            Text(
+              context.translate.dashboardTotalBlance,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
             const SizedBox(height: 8),
             Text(
               '\$14,250.00',
@@ -35,7 +39,7 @@ class TotalBalanceCard extends StatelessWidget {
                         ),
                         SizedBox(width: 8),
                         Text(
-                          'Income',
+                          context.translate.income,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
@@ -66,7 +70,7 @@ class TotalBalanceCard extends StatelessWidget {
                         ),
                         SizedBox(width: 8),
                         Text(
-                          'Expenses',
+                          context.translate.expenses,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
