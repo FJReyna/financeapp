@@ -13,9 +13,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-class TransactionsPage extends StatelessWidget {
+class TransactionsPage extends StatefulWidget {
   const TransactionsPage({super.key});
 
+  @override
+  State<TransactionsPage> createState() => _TransactionsPageState();
+}
+
+class _TransactionsPageState extends State<TransactionsPage> {
   Map<String, List<TransactionWithCategory>> _groupTransactionsByDate(
     List<TransactionWithCategory> transactions,
     BuildContext context,
@@ -51,10 +56,15 @@ class TransactionsPage extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    super.initState();
+    getIt<TransactionsBloc>().add(GetTransactionsWithCategoryEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider<TransactionsBloc>(
-      create: (context) =>
-          getIt<TransactionsBloc>()..add(GetTransactionsWithCategoryEvent()),
+    return BlocProvider<TransactionsBloc>.value(
+      value: getIt<TransactionsBloc>(),
       child: BlocListener<TransactionsBloc, TransactionsState>(
         listener: (context, state) {
           if (state.status == TransactionsStatus.submited) {
