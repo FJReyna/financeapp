@@ -7,6 +7,7 @@ import 'package:finance/features/settings/presentation/bloc/settings_state.dart'
 import 'package:finance/features/settings/presentation/widgets/section_container.dart';
 import 'package:finance/features/settings/presentation/widgets/section_item.dart';
 import 'package:finance/features/settings/presentation/widgets/section_item_dropdown.dart';
+import 'package:finance/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -79,11 +80,33 @@ class SettingsPage extends StatelessWidget {
                     },
                   ),
                   Divider(height: 1, thickness: 1, indent: 16, endIndent: 16),
-                  SectionItem(
+                  SectionItemDropdown<String>(
                     icon: FontAwesomeIcons.language,
                     title: 'Language',
                     subtitle: 'English',
                     iconColor: Colors.purple,
+                    value: state.settings?.locale ?? 'en',
+                    items: AppLocalizations.supportedLocales.map((locale) {
+                      return DropdownMenuItem(
+                        value: locale.languageCode,
+                        child: Text(
+                          locale.languageName,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (String? locale) {
+                      if (locale != null) {
+                        context.read<SettingsBloc>().add(
+                          SaveSettingsEvent(
+                            state.settings!.copyWith(locale: locale),
+                          ),
+                        );
+                      }
+                    },
                   ),
                 ],
               ),

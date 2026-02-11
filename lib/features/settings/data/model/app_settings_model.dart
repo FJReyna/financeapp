@@ -13,12 +13,20 @@ class AppSettingsModel {
   @HiveField(1)
   final String currency;
 
-  AppSettingsModel({required this.themeMode, required this.currency});
+  @HiveField(2)
+  final String locale;
+
+  AppSettingsModel({
+    required this.themeMode,
+    required this.currency,
+    required this.locale,
+  });
 
   factory AppSettingsModel.fromEntity(AppSettings settings) {
     return AppSettingsModel(
       themeMode: settings.themeMode.index,
       currency: settings.currency,
+      locale: settings.locale,
     );
   }
 
@@ -26,6 +34,7 @@ class AppSettingsModel {
     return AppSettings(
       themeMode: ThemeMode.values[themeMode],
       currency: currency,
+      locale: locale,
     );
   }
 }

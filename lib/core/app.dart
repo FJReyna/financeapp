@@ -4,6 +4,7 @@ import 'package:finance/core/theme/app_theme.dart';
 import 'package:finance/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:finance/features/settings/presentation/bloc/settings_event.dart';
 import 'package:finance/features/settings/presentation/bloc/settings_state.dart';
+import 'package:finance/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,6 +23,9 @@ class App extends StatelessWidget {
             theme: AppTheme.lightTheme,
             themeMode: state.settings?.themeMode,
             darkTheme: AppTheme.darkTheme,
+            locale: Locale(state.settings?.locale ?? 'en'),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
           );
         },
       ),

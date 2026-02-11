@@ -21,7 +21,11 @@ class SettingsRepositoryImpl implements SettingsRepository {
     if (model != null) {
       return model.toEntity();
     } else {
-      return AppSettings(themeMode: ThemeMode.system, currency: 'USD');
+      return AppSettings(
+        themeMode: ThemeMode.system,
+        currency: 'USD',
+        locale: 'en',
+      );
     }
   }
 }

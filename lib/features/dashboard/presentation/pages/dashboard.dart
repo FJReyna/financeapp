@@ -1,3 +1,4 @@
+import 'package:finance/core/util/extensions.dart';
 import 'package:finance/core/widgets/bottom_nav_bar.dart';
 import 'package:finance/features/dashboard/presentation/widgets/monthly_trend.dart';
 import 'package:finance/features/dashboard/presentation/widgets/spending_breakdown_card.dart';
@@ -16,7 +17,7 @@ class Dashboard extends StatelessWidget {
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Welcome back'),
+        title: Text(context.translate.welcomeTitle),
         actions: [
           IconButton(onPressed: () {}, icon: Icon(FontAwesomeIcons.bell)),
         ],
