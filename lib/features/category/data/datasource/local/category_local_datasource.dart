@@ -23,17 +23,20 @@ class CategoryLocalDatasource {
   }
 
   Future<List<String>> seed() async {
+    Uuid uuid = getIt<Uuid>();
+
     List<String> categoryIds = [];
 
     IconData houseIconData = FontAwesomeIcons.house;
     IconData utensilsIconData = FontAwesomeIcons.utensils;
     IconData carIconData = FontAwesomeIcons.car;
     IconData filmIconData = FontAwesomeIcons.film;
+    IconData plusIconData = FontAwesomeIcons.plus;
 
     if (box.isEmpty) {
       final defaultCategories = [
         CategoryModel(
-          id: getIt<Uuid>().v4(),
+          id: uuid.v4(),
           name: 'Housing',
           icon: FontAwesomeIcons.house.codePoint,
           color: Colors.blue.toARGB32(),
@@ -41,7 +44,7 @@ class CategoryLocalDatasource {
           iconFontPackage: houseIconData.fontPackage ?? '',
         ),
         CategoryModel(
-          id: getIt<Uuid>().v4(),
+          id: uuid.v4(),
           name: 'Food & Drinking',
           icon: FontAwesomeIcons.utensils.codePoint,
           color: Colors.orange.toARGB32(),
@@ -49,7 +52,7 @@ class CategoryLocalDatasource {
           iconFontPackage: utensilsIconData.fontPackage ?? '',
         ),
         CategoryModel(
-          id: getIt<Uuid>().v4(),
+          id: uuid.v4(),
           name: 'Transportation',
           icon: carIconData.codePoint,
           color: Colors.purple.toARGB32(),
@@ -57,12 +60,20 @@ class CategoryLocalDatasource {
           iconFontPackage: carIconData.fontPackage ?? '',
         ),
         CategoryModel(
-          id: getIt<Uuid>().v4(),
+          id: uuid.v4(),
           name: 'Entertainment',
           icon: filmIconData.codePoint,
           color: Colors.pink.toARGB32(),
           iconFontFamily: filmIconData.fontFamily ?? '',
           iconFontPackage: filmIconData.fontPackage ?? '',
+        ),
+        CategoryModel(
+          id: uuid.v4(),
+          name: 'Other',
+          icon: plusIconData.codePoint,
+          color: Colors.teal.toARGB32(),
+          iconFontFamily: plusIconData.fontFamily ?? '',
+          iconFontPackage: plusIconData.fontPackage ?? '',
         ),
       ];
 

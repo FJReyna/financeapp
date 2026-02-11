@@ -7,10 +7,11 @@ environment:
   sdk: ^3.10.4
 
 dependencies:
-  flutter:
-    sdk: flutter
+  animations: ^2.1.1
   cupertino_icons: ^1.0.8
   dartz: ^0.10.1
+  flutter:
+    sdk: flutter
   fl_chart: ^1.1.1
   flutter_bloc: ^9.1.1
   font_awesome_flutter: ^10.12.0

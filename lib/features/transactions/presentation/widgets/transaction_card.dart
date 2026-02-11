@@ -1,5 +1,5 @@
-import 'package:finance/features/transactions/domain/entitites/transaction.dart';
-import 'package:finance/features/transactions/domain/entitites/transaction_with_category.dart';
+import 'package:finance/features/transactions/domain/entities/transaction.dart';
+import 'package:finance/features/transactions/domain/entities/transaction_with_category.dart';
 import 'package:flutter/material.dart';
 
 class TransactionCard extends StatelessWidget {

@@ -3,6 +3,7 @@ import 'package:finance/features/dashboard/presentation/pages/dashboard.dart';
 import 'package:finance/features/settings/presentation/pages/settings_page.dart';
 import 'package:finance/features/stats/presentation/pages/statistics_page.dart';
 import 'package:finance/features/transactions/presentation/pages/transactions_page.dart';
+import 'package:finance/features/transactions/presentation/pages/add_transaction_page.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -15,6 +16,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: transactionsRoute,
       builder: (context, state) => const TransactionsPage(),
+    ),
+    GoRoute(
+      path: addTransactionRoute,
+      builder: (context, state) => const AddTransactionPage(),
     ),
     GoRoute(
       path: statsRoute,

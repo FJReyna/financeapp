@@ -1,5 +1,5 @@
 import 'package:finance/features/category/domain/entites/category.dart';
-import 'package:finance/features/transactions/domain/entitites/transaction.dart';
+import 'package:finance/features/transactions/domain/entities/transaction.dart';
 
 class TransactionWithCategory {
   Transaction transaction;

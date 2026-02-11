@@ -1,6 +1,7 @@
 import 'package:finance/core/dependency_injection.dart';
+import 'package:finance/core/routes/routes.dart';
 import 'package:finance/core/widgets/bottom_nav_bar.dart';
-import 'package:finance/features/transactions/domain/entitites/transaction_with_category.dart';
+import 'package:finance/features/transactions/domain/entities/transaction_with_category.dart';
 import 'package:finance/features/transactions/presentation/bloc/transactions/transactions_bloc.dart';
 import 'package:finance/features/transactions/presentation/bloc/transactions/transactions_event.dart';
 import 'package:finance/features/transactions/presentation/bloc/transactions/transactions_state.dart';
@@ -8,6 +9,7 @@ import 'package:finance/features/transactions/presentation/widgets/transaction_c
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class TransactionsPage extends StatelessWidget {
@@ -104,7 +106,9 @@ class TransactionsPage extends StatelessWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            context.push(addTransactionRoute);
+          },
           child: const Icon(FontAwesomeIcons.plus),
         ),
         bottomNavigationBar: Hero(

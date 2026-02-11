@@ -1,4 +1,4 @@
-import 'package:finance/features/transactions/domain/entitites/transaction.dart';
+import 'package:finance/features/transactions/domain/entities/transaction.dart';
 
 abstract class TransactionRepository {
   Future<void> addTransaction(Transaction transaction);

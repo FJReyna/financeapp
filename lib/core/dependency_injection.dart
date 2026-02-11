@@ -4,6 +4,7 @@ import 'package:finance/features/category/data/datasource/local/category_local_d
 import 'package:finance/features/category/data/model/category_model.dart';
 import 'package:finance/features/category/data/repository/category_repository_impl.dart';
 import 'package:finance/features/category/domain/repository/category_repository.dart';
+import 'package:finance/features/category/domain/usecases/get_all_categories.dart';
 import 'package:finance/features/category/domain/usecases/get_top_categories.dart';
 import 'package:finance/features/settings/data/datasource/local/settings_local_datasource.dart';
 import 'package:finance/features/settings/data/model/app_settings_model.dart';
@@ -18,6 +19,7 @@ import 'package:finance/features/transactions/data/model/transaction_model.dart'
 import 'package:finance/features/transactions/data/repository/transaction_repository_impl.dart';
 import 'package:finance/features/transactions/domain/repository/transaction_repository.dart';
 import 'package:finance/features/transactions/domain/usecase/get_all_transactions.dart';
+import 'package:finance/features/transactions/presentation/bloc/categories/categories_bloc.dart';
 import 'package:finance/features/transactions/presentation/bloc/transactions/transactions_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
@@ -43,6 +45,9 @@ Future<void> setup() async {
   );
   getIt.registerFactory<SettingsBloc>(
     () => SettingsBloc(getIt<GetSettings>(), getIt<SaveSettings>()),
+  );
+  getIt.registerFactory<CategoriesBloc>(
+    () => CategoriesBloc(getIt<GetAllCategories>()),
   );
 }
 
@@ -133,6 +138,10 @@ Future<List<String>> setUpCategories() async {
 
   getIt.registerLazySingleton<GetTopCategories>(
     () => GetTopCategories(getIt<CategoryRepository>()),
+  );
+
+  getIt.registerLazySingleton<GetAllCategories>(
+    () => GetAllCategories(getIt<CategoryRepository>()),
   );
 
   return categoryIds;

@@ -1,4 +1,4 @@
-import 'package:finance/features/transactions/domain/entitites/transaction_with_category.dart';
+import 'package:finance/features/transactions/domain/entities/transaction_with_category.dart';
 
 enum TransactionsStatus { initial, loading, success, failure }
 

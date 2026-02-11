@@ -1,5 +1,5 @@
 import 'package:finance/core/database/hive_type_id.dart';
-import 'package:finance/features/transactions/domain/entitites/transaction.dart';
+import 'package:finance/features/transactions/domain/entities/transaction.dart';
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 
 part 'transaction_model.g.dart';

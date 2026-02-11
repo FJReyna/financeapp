@@ -1,5 +1,5 @@
 import 'package:finance/features/transactions/data/datasource/transaction_local_datasource.dart';
-import 'package:finance/features/transactions/domain/entitites/transaction.dart';
+import 'package:finance/features/transactions/domain/entities/transaction.dart';
 import 'package:finance/features/transactions/domain/repository/transaction_repository.dart';
 
 class TransactionRepositoryImpl implements TransactionRepository {
