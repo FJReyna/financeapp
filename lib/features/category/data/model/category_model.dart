@@ -19,6 +19,8 @@ class CategoryModel {
   final String iconFontFamily;
   @HiveField(5)
   final String iconFontPackage;
+  @HiveField(6)
+  final String? nameKey;
 
   CategoryModel({
     required this.id,
@@ -27,6 +29,7 @@ class CategoryModel {
     required this.color,
     required this.iconFontFamily,
     required this.iconFontPackage,
+    this.nameKey,
   });
 
   factory CategoryModel.fromEntity(Category category) {
@@ -37,6 +40,7 @@ class CategoryModel {
       color: category.color.toARGB32(),
       iconFontFamily: category.icon.fontFamily ?? '',
       iconFontPackage: category.icon.fontPackage ?? '',
+      nameKey: category.nameKey,
     );
   }
 
@@ -55,6 +59,7 @@ class CategoryModel {
         (color >> 8) & 0xFF,
         color & 0xFF,
       ),
+      nameKey: nameKey,
     );
   }
 }

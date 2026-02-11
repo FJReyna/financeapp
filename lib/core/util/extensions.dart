@@ -1,3 +1,4 @@
+import 'package:finance/features/category/domain/entites/category.dart';
 import 'package:finance/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -37,6 +38,30 @@ extension Language on Locale {
         return 'Français';
       default:
         return languageCode;
+    }
+  }
+}
+
+extension CategoryNameExtension on Category {
+  String localizedName(BuildContext context) {
+    if (nameKey == null) {
+      return name;
+    }
+
+    final localizations = AppLocalizations.of(context)!;
+    switch (nameKey) {
+      case 'housingCategory':
+        return localizations.housingCategory;
+      case 'foodCategory':
+        return localizations.foodCategory;
+      case 'transportationCategory':
+        return localizations.transportationCategory;
+      case 'entertainmentCategory':
+        return localizations.entertainmentCategory;
+      case 'otherCategory':
+        return localizations.otherCategory;
+      default:
+        return name;
     }
   }
 }

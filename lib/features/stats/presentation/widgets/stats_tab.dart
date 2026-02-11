@@ -68,7 +68,7 @@ class StatsTab extends StatelessWidget {
                     return CategoryDesc(
                       icon: category.icon,
                       iconColor: category.color,
-                      title: category.name,
+                      title: category.localizedName(context),
                     );
                   }).toList(),
                 );

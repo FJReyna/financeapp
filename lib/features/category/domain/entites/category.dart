@@ -5,11 +5,13 @@ class Category {
   final String name;
   final IconData icon;
   final Color color;
+  final String? nameKey;
 
   Category({
     required this.id,
     required this.name,
     required this.icon,
     required this.color,
+    this.nameKey,
   });
 }

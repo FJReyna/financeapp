@@ -42,6 +42,7 @@ class CategoryLocalDatasource {
           color: Colors.blue.toARGB32(),
           iconFontFamily: houseIconData.fontFamily ?? '',
           iconFontPackage: houseIconData.fontPackage ?? '',
+          nameKey: 'housingCategory',
         ),
         CategoryModel(
           id: uuid.v4(),
@@ -50,6 +51,7 @@ class CategoryLocalDatasource {
           color: Colors.orange.toARGB32(),
           iconFontFamily: utensilsIconData.fontFamily ?? '',
           iconFontPackage: utensilsIconData.fontPackage ?? '',
+          nameKey: 'foodCategory',
         ),
         CategoryModel(
           id: uuid.v4(),
@@ -58,6 +60,7 @@ class CategoryLocalDatasource {
           color: Colors.purple.toARGB32(),
           iconFontFamily: carIconData.fontFamily ?? '',
           iconFontPackage: carIconData.fontPackage ?? '',
+          nameKey: 'transportationCategory',
         ),
         CategoryModel(
           id: uuid.v4(),
@@ -66,6 +69,7 @@ class CategoryLocalDatasource {
           color: Colors.pink.toARGB32(),
           iconFontFamily: filmIconData.fontFamily ?? '',
           iconFontPackage: filmIconData.fontPackage ?? '',
+          nameKey: 'entertainmentCategory',
         ),
         CategoryModel(
           id: uuid.v4(),
@@ -74,6 +78,7 @@ class CategoryLocalDatasource {
           color: Colors.teal.toARGB32(),
           iconFontFamily: plusIconData.fontFamily ?? '',
           iconFontPackage: plusIconData.fontPackage ?? '',
+          nameKey: 'otherCategory',
         ),
       ];
 

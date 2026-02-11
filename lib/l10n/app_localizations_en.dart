@@ -49,6 +49,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get topExpense => 'Top Expense';
 
   @override
+  String get housingCategory => 'Housing';
+
+  @override
+  String get foodCategory => 'Food';
+
+  @override
+  String get transportationCategory => 'Transportation';
+
+  @override
+  String get entertainmentCategory => 'Entertainment';
+
+  @override
+  String get otherCategory => 'Other';
+
+  @override
   String get navbarHome => 'Home';
 
   @override

@@ -1,3 +1,4 @@
+import 'package:finance/core/util/extensions.dart';
 import 'package:finance/features/transactions/domain/entities/transaction.dart';
 import 'package:finance/features/transactions/domain/entities/transaction_with_category.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class TransactionCard extends StatelessWidget {
           ),
         ),
         title: Text(transaction.transaction.title),
-        subtitle: Text(transaction.category.name),
+        subtitle: Text(transaction.category.localizedName(context)),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,

@@ -102,7 +102,7 @@ class _CategorySelectorState extends State<CategorySelector> {
                                     ),
                                   ),
                                   Text(
-                                    category.name,
+                                    category.localizedName(context),
                                     textAlign: TextAlign.center,
                                     overflow: TextOverflow.ellipsis,
                                   ),

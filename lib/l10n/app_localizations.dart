@@ -176,6 +176,36 @@ abstract class AppLocalizations {
   /// **'Top Expense'**
   String get topExpense;
 
+  /// No description provided for @housingCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Housing'**
+  String get housingCategory;
+
+  /// No description provided for @foodCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get foodCategory;
+
+  /// No description provided for @transportationCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Transportation'**
+  String get transportationCategory;
+
+  /// No description provided for @entertainmentCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Entertainment'**
+  String get entertainmentCategory;
+
+  /// No description provided for @otherCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get otherCategory;
+
   /// No description provided for @navbarHome.
   ///
   /// In en, this message translates to:
