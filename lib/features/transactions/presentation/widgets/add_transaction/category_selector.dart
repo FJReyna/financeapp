@@ -1,10 +1,13 @@
 import 'package:finance/core/dependency_injection.dart';
+import 'package:finance/core/routes/routes.dart';
 import 'package:finance/core/util/extensions.dart';
 import 'package:finance/features/transactions/presentation/bloc/categories/categories_bloc.dart';
 import 'package:finance/features/transactions/presentation/bloc/categories/categories_event.dart';
 import 'package:finance/features/transactions/presentation/bloc/categories/categories_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 class CategorySelector extends StatefulWidget {
   final String selectedCategoryId;
@@ -22,6 +25,12 @@ class CategorySelector extends StatefulWidget {
 
 class _CategorySelectorState extends State<CategorySelector> {
   @override
+  void initState() {
+    super.initState();
+    getIt<CategoriesBloc>().add(GetCategoriesEvent());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FormField<String>(
       initialValue: widget.selectedCategoryId,
@@ -32,9 +41,8 @@ class _CategorySelectorState extends State<CategorySelector> {
         return null;
       },
       builder: (FormFieldState<String> fieldState) {
-        return BlocProvider(
-          create: (context) =>
-              getIt<CategoriesBloc>()..add(GetCategoriesEvent()),
+        return BlocProvider.value(
+          value: getIt<CategoriesBloc>(),
           child: BlocBuilder<CategoriesBloc, CategoriesState>(
             builder: (context, categoriesState) {
               if (categoriesState.status == CategoriesStatus.loading) {
@@ -68,8 +76,35 @@ class _CategorySelectorState extends State<CategorySelector> {
                                 crossAxisSpacing: 8.0,
                                 childAspectRatio: 1,
                               ),
-                          itemCount: categories.length,
+                          itemCount: categories.length + 1,
                           itemBuilder: (context, index) {
+                            if (index == categories.length) {
+                              return GestureDetector(
+                                onTap: () {
+                                  context.push(addCategoryRoute);
+                                },
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Icon(
+                                        FontAwesomeIcons.circlePlus,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.primary,
+                                      ),
+                                    ),
+                                    Text(
+                                      context.translate.add,
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
                             final category = categories[index];
                             return GestureDetector(
                               onTap: () {

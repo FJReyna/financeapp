@@ -1,4 +1,5 @@
 import 'package:finance/core/routes/routes.dart';
+import 'package:finance/features/category/presentation/pages/add_category_page.dart';
 import 'package:finance/features/dashboard/presentation/pages/dashboard.dart';
 import 'package:finance/features/settings/presentation/pages/settings_page.dart';
 import 'package:finance/features/stats/presentation/pages/statistics_page.dart';
@@ -28,6 +29,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: settingsRoute,
       builder: (context, state) => const SettingsPage(),
+    ),
+    GoRoute(
+      path: addCategoryRoute,
+      builder: (context, state) => const AddCategoryPage(),
     ),
   ],
 );

@@ -9,6 +9,7 @@
   "year": "Year",
   "date": "Date",
   "save": "Save",
+  "add": "Add",
   "emptyFieldError": "This field cannot be empty",
   "emptyAmountError": "Amount cannot be empty",
   "validAmountError": "Please enter a valid amount greater than zero",
@@ -51,5 +52,10 @@
   "settingsData": "Data",
   "settingsExportData": "Export Data",
   "settingsImportData": "Import Data",
-  "settingsSyncData": "Cloud Sync"
+  "settingsSyncData": "Cloud Sync",
+  "addCategoryTitle": "Add Category",
+  "addCategoryNameLabel": "Category Name",
+  "addCategoryIconLabel": "Select an icon",
+  "addCategoryIconValidatorError": "Please select an icon",
+  "addCategoryColorLabel": "Select a color"
 }

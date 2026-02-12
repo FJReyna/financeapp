@@ -3,3 +3,4 @@ const String transactionsRoute = '/transactions';
 const String settingsRoute = '/settings';
 const String statsRoute = '/stats';
 const String addTransactionRoute = '/add_transaction';
+const String addCategoryRoute = '/add_category';

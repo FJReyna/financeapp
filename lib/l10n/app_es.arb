@@ -9,6 +9,7 @@
   "year": "Año",
   "date": "Fecha",
   "save": "Guardar",
+  "add": "Agregar",
   "emptyFieldError": "Este campo no puede estar vacío",
   "emptyAmountError": "El monto no puede estar vacío",
   "validAmountError": "Por favor ingrese un monto válido, mayor a cero",
@@ -51,5 +52,10 @@
   "settingsData": "Información",
   "settingsExportData": "Exportar Datos",
   "settingsImportData": "Importar Datos",
-  "settingsSyncData": "Sincronización en la Nube"
+  "settingsSyncData": "Sincronización en la Nube",
+  "addCategoryTitle": "Agregar Categoría",
+  "addCategoryNameLabel": "Nombre de la Categoría",
+  "addCategoryIconLabel": "Selecciona un ícono",
+  "addCategoryIconValidatorError": "Por favor, selecciona un ícono",
+  "addCategoryColorLabel": "Selecciona un color"
 }

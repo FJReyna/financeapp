@@ -36,6 +36,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get save => 'Guardar';
 
   @override
+  String get add => 'Agregar';
+
+  @override
   String get emptyFieldError => 'Este campo no puede estar vacío';
 
   @override
@@ -167,4 +170,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingsSyncData => 'Sincronización en la Nube';
+
+  @override
+  String get addCategoryTitle => 'Agregar Categoría';
+
+  @override
+  String get addCategoryNameLabel => 'Nombre de la Categoría';
+
+  @override
+  String get addCategoryIconLabel => 'Selecciona un ícono';
+
+  @override
+  String get addCategoryIconValidatorError => 'Por favor, selecciona un ícono';
+
+  @override
+  String get addCategoryColorLabel => 'Selecciona un color';
 }

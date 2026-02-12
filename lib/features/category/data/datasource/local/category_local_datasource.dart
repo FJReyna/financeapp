@@ -31,7 +31,7 @@ class CategoryLocalDatasource {
     IconData utensilsIconData = FontAwesomeIcons.utensils;
     IconData carIconData = FontAwesomeIcons.car;
     IconData filmIconData = FontAwesomeIcons.film;
-    IconData plusIconData = FontAwesomeIcons.plus;
+    IconData otherIconData = FontAwesomeIcons.question;
 
     if (box.isEmpty) {
       final defaultCategories = [
@@ -74,10 +74,10 @@ class CategoryLocalDatasource {
         CategoryModel(
           id: uuid.v4(),
           name: 'Other',
-          icon: plusIconData.codePoint,
+          icon: otherIconData.codePoint,
           color: Colors.teal.toARGB32(),
-          iconFontFamily: plusIconData.fontFamily ?? '',
-          iconFontPackage: plusIconData.fontPackage ?? '',
+          iconFontFamily: otherIconData.fontFamily ?? '',
+          iconFontPackage: otherIconData.fontPackage ?? '',
           nameKey: 'otherCategory',
         ),
       ];

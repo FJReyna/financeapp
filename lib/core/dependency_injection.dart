@@ -47,8 +47,8 @@ Future<void> setup() async {
   getIt.registerFactory<SettingsBloc>(
     () => SettingsBloc(getIt<GetSettings>(), getIt<SaveSettings>()),
   );
-  getIt.registerFactory<CategoriesBloc>(
-    () => CategoriesBloc(getIt<GetAllCategories>()),
+  getIt.registerSingleton<CategoriesBloc>(
+    CategoriesBloc(getIt<GetAllCategories>()),
   );
 }
 

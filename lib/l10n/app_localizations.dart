@@ -152,6 +152,12 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get save;
 
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
   /// No description provided for @emptyFieldError.
   ///
   /// In en, this message translates to:
@@ -409,6 +415,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cloud Sync'**
   String get settingsSyncData;
+
+  /// No description provided for @addCategoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Category'**
+  String get addCategoryTitle;
+
+  /// No description provided for @addCategoryNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category Name'**
+  String get addCategoryNameLabel;
+
+  /// No description provided for @addCategoryIconLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an icon'**
+  String get addCategoryIconLabel;
+
+  /// No description provided for @addCategoryIconValidatorError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select an icon'**
+  String get addCategoryIconValidatorError;
+
+  /// No description provided for @addCategoryColorLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a color'**
+  String get addCategoryColorLabel;
 }
 
 class _AppLocalizationsDelegate
