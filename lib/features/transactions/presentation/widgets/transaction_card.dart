@@ -1,3 +1,4 @@
+import 'package:finance/core/routes/routes.dart';
 import 'package:finance/core/util/extensions.dart';
 import 'package:finance/features/transactions/domain/entities/transaction.dart';
 import 'package:finance/features/transactions/domain/entities/transaction_with_category.dart';
@@ -6,6 +7,7 @@ import 'package:finance/features/transactions/presentation/bloc/transactions/tra
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class TransactionCard extends StatelessWidget {
   final TransactionWithCategory transaction;
@@ -60,6 +62,9 @@ class TransactionCard extends StatelessWidget {
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: ListTile(
+          onTap: () {
+            context.push('${Routes.transaction}/${transaction.transaction.id}');
+          },
           leading: CircleAvatar(
             backgroundColor: transaction.category.color.withAlpha(50),
             child: Icon(

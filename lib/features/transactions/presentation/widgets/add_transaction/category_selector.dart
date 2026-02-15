@@ -82,7 +82,7 @@ class _CategorySelectorState extends State<CategorySelector> {
                               return GestureDetector(
                                 onTap: () async {
                                   final bool? result = await context.push<bool>(
-                                    addCategoryRoute,
+                                    Routes.addCategory,
                                   );
                                   if (result == true) {
                                     getIt<CategoriesBloc>().add(

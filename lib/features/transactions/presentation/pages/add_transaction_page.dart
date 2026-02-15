@@ -1,5 +1,4 @@
 import 'package:finance/core/util/extensions.dart';
-import 'package:finance/core/widgets/bottom_nav_bar.dart';
 import 'package:finance/features/transactions/presentation/widgets/transaction_form.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -22,10 +21,6 @@ class AddTransactionPage extends StatelessWidget {
         ),
       ),
       body: Center(child: TransactionForm()),
-      bottomNavigationBar: Hero(
-        tag: 'bottom_nav_bar',
-        child: BottomNavBar(currentIndex: 1),
-      ),
     );
   }
 }

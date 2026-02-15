@@ -23,6 +23,7 @@ import 'package:finance/features/transactions/domain/repository/transaction_repo
 import 'package:finance/features/transactions/domain/usecase/add_transaction.dart';
 import 'package:finance/features/transactions/domain/usecase/delete_transaction.dart';
 import 'package:finance/features/transactions/domain/usecase/get_all_transactions.dart';
+import 'package:finance/features/transactions/domain/usecase/get_transaction.dart';
 import 'package:finance/features/transactions/presentation/bloc/categories/categories_bloc.dart';
 import 'package:finance/features/transactions/presentation/bloc/transactions/transactions_bloc.dart';
 import 'package:flutter/foundation.dart';
@@ -67,6 +68,7 @@ Future<void> setUpBlocs() async {
   getIt.registerLazySingleton<TransactionsBloc>(
     () => TransactionsBloc(
       getIt<GetAllTransactions>(),
+      getIt<GetTransaction>(),
       getIt<AddTransaction>(),
       getIt<DeleteTransaction>(),
     ),
@@ -128,6 +130,10 @@ Future<void> setUpTransactions(List<String> categoryIds) async {
       getIt<TransactionRepository>(),
       getIt<CategoryRepository>(),
     ),
+  );
+
+  getIt.registerLazySingleton<GetTransaction>(
+    () => GetTransaction(getIt<TransactionRepository>()),
   );
 
   getIt.registerLazySingleton<AddTransaction>(

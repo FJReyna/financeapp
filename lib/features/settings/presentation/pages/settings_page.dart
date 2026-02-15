@@ -1,3 +1,4 @@
+import 'package:finance/core/constants/hero_tags.dart';
 import 'package:finance/core/util/currencies.dart';
 import 'package:finance/core/util/extensions.dart';
 import 'package:finance/core/widgets/bottom_nav_bar.dart';
@@ -155,7 +156,7 @@ class SettingsPage extends StatelessWidget {
         },
       ),
       bottomNavigationBar: Hero(
-        tag: 'bottom_nav_bar',
+        tag: HeroTags.bottomNavBar,
         child: BottomNavBar(currentIndex: 3),
       ),
     );

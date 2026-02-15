@@ -14,6 +14,10 @@ class TransactionLocalDatasource {
     return box.values.toList();
   }
 
+  Future<TransactionModel> get(String id) async {
+    return box.get(id)!;
+  }
+
   Future<void> add(TransactionModel transaction) async {
     await box.put(transaction.id, transaction);
   }

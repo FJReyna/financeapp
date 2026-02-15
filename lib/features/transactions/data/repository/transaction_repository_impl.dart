@@ -25,6 +25,12 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
+  Future<Transaction> getTransaction(String id) async {
+    final transactionModel = await localDatasource.get(id);
+    return transactionModel.toEntity();
+  }
+
+  @override
   Future<void> updateTransaction(Transaction transaction) {
     // TODO: implement updateTransaction
     throw UnimplementedError();

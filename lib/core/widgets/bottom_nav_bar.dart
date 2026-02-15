@@ -34,16 +34,16 @@ class BottomNavBar extends StatelessWidget {
       onTap: (index) {
         switch (index) {
           case 0:
-            context.go(dashboardRoute);
+            context.go(Routes.dashboard);
             break;
           case 1:
-            context.go(transactionsRoute);
+            context.go(Routes.transactions);
             break;
           case 2:
-            context.go(statsRoute);
+            context.go(Routes.stats);
             break;
           case 3:
-            context.go(settingsRoute);
+            context.go(Routes.settings);
             break;
         }
       },

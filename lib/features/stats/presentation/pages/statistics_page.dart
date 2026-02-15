@@ -1,3 +1,4 @@
+import 'package:finance/core/constants/hero_tags.dart';
 import 'package:finance/core/util/extensions.dart';
 import 'package:finance/core/widgets/bottom_nav_bar.dart';
 import 'package:finance/features/stats/presentation/widgets/bar_chart_stats.dart';
@@ -33,7 +34,7 @@ class StatisticsPage extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: Hero(
-          tag: 'bottom_nav_bar',
+          tag: HeroTags.bottomNavBar,
           child: BottomNavBar(currentIndex: 2),
         ),
       ),

@@ -4,6 +4,12 @@ abstract class TransactionsEvent {}
 
 class GetTransactionsWithCategoryEvent extends TransactionsEvent {}
 
+class GetTransactionEvent extends TransactionsEvent {
+  final String transactionId;
+
+  GetTransactionEvent({required this.transactionId});
+}
+
 class AddTransactionEvent extends TransactionsEvent {
   final Transaction transaction;
 

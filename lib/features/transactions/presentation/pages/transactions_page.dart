@@ -1,3 +1,4 @@
+import 'package:finance/core/constants/hero_tags.dart';
 import 'package:finance/core/dependency_injection.dart';
 import 'package:finance/core/routes/routes.dart';
 import 'package:finance/core/util/extensions.dart';
@@ -93,7 +94,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
             padding: const EdgeInsets.all(12.0),
             child: BlocBuilder<TransactionsBloc, TransactionsState>(
               builder: (context, state) {
-                if (state.status == TransactionsStatus.loading) {
+                if (state.status == TransactionsStatus.loadingList) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state.status == TransactionsStatus.failure) {
                   return Center(child: Text(state.errorMessage ?? 'Error'));
@@ -147,12 +148,12 @@ class _TransactionsPageState extends State<TransactionsPage> {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              context.push(addTransactionRoute);
+              context.push(Routes.addTransaction);
             },
             child: const Icon(FontAwesomeIcons.plus),
           ),
           bottomNavigationBar: Hero(
-            tag: 'bottom_nav_bar',
+            tag: HeroTags.bottomNavBar,
             child: BottomNavBar(currentIndex: 1),
           ),
         ),
