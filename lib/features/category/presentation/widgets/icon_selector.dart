@@ -5,15 +5,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class IconSelector extends StatefulWidget {
   final IconData? selectedIcon;
   final ValueChanged<IconData>? onIconSelected;
+  final Color iconColor;
 
-  const IconSelector({super.key, this.selectedIcon, this.onIconSelected});
+  const IconSelector({
+    super.key,
+    this.selectedIcon,
+    this.onIconSelected,
+    this.iconColor = Colors.blue,
+  });
 
   @override
   State<IconSelector> createState() => _IconSelectorState();
 }
 
 class _IconSelectorState extends State<IconSelector> {
-  // Lista de íconos predefinidos comunes
   static final List<IconData> _availableIcons = [
     FontAwesomeIcons.house,
     FontAwesomeIcons.utensils,
@@ -111,16 +116,11 @@ class _IconSelectorState extends State<IconSelector> {
                       child: Container(
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? Theme.of(
-                                  context,
-                                ).colorScheme.primary.withAlpha(50)
+                              ? widget.iconColor.withAlpha(50)
                               : Colors.transparent,
                           shape: BoxShape.circle,
                           border: isSelected
-                              ? Border.all(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  width: 2,
-                                )
+                              ? Border.all(color: widget.iconColor, width: 2)
                               : Border.all(
                                   color: Colors.grey.withAlpha(50),
                                   width: 1,
@@ -128,9 +128,7 @@ class _IconSelectorState extends State<IconSelector> {
                         ),
                         child: Icon(
                           icon,
-                          color: isSelected
-                              ? Theme.of(context).colorScheme.primary
-                              : Colors.grey,
+                          color: isSelected ? widget.iconColor : Colors.grey,
                           size: 24,
                         ),
                       ),

@@ -445,6 +445,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select a color'**
   String get addCategoryColorLabel;
+
+  /// No description provided for @addCategoryColorValidatorError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a color'**
+  String get addCategoryColorValidatorError;
 }
 
 class _AppLocalizationsDelegate

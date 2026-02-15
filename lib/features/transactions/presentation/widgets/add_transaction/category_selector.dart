@@ -41,7 +41,7 @@ class _CategorySelectorState extends State<CategorySelector> {
         return null;
       },
       builder: (FormFieldState<String> fieldState) {
-        return BlocProvider.value(
+        return BlocProvider<CategoriesBloc>.value(
           value: getIt<CategoriesBloc>(),
           child: BlocBuilder<CategoriesBloc, CategoriesState>(
             builder: (context, categoriesState) {
@@ -80,8 +80,15 @@ class _CategorySelectorState extends State<CategorySelector> {
                           itemBuilder: (context, index) {
                             if (index == categories.length) {
                               return GestureDetector(
-                                onTap: () {
-                                  context.push(addCategoryRoute);
+                                onTap: () async {
+                                  final bool? result = await context.push<bool>(
+                                    addCategoryRoute,
+                                  );
+                                  if (result == true) {
+                                    getIt<CategoriesBloc>().add(
+                                      GetCategoriesEvent(),
+                                    );
+                                  }
                                 },
                                 child: Column(
                                   mainAxisAlignment:

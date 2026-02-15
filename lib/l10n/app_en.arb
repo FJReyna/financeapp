@@ -57,5 +57,6 @@
   "addCategoryNameLabel": "Category Name",
   "addCategoryIconLabel": "Select an icon",
   "addCategoryIconValidatorError": "Please select an icon",
-  "addCategoryColorLabel": "Select a color"
+  "addCategoryColorLabel": "Select a color",
+  "addCategoryColorValidatorError": "Please select a color"
 }

@@ -14,4 +14,20 @@ class Category {
     required this.color,
     this.nameKey,
   });
+
+  Category copyWith({
+    String? id,
+    String? name,
+    IconData? icon,
+    Color? color,
+    String? nameKey,
+  }) {
+    return Category(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      icon: icon ?? this.icon,
+      color: color ?? this.color,
+      nameKey: nameKey ?? this.nameKey,
+    );
+  }
 }

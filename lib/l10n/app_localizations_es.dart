@@ -185,4 +185,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get addCategoryColorLabel => 'Selecciona un color';
+
+  @override
+  String get addCategoryColorValidatorError => 'Por favor, selecciona un color';
 }

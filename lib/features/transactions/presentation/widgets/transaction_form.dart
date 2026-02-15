@@ -1,6 +1,7 @@
 import 'package:finance/core/dependency_injection.dart';
 import 'package:finance/core/util/extensions.dart';
 import 'package:finance/core/util/validators.dart';
+import 'package:finance/core/widgets/save_form_button.dart';
 import 'package:finance/features/transactions/domain/entities/transaction.dart';
 import 'package:finance/features/transactions/presentation/bloc/transactions/transactions_bloc.dart';
 import 'package:finance/features/transactions/presentation/bloc/transactions/transactions_event.dart';
@@ -40,8 +41,8 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<TransactionsBloc>(),
+    return BlocProvider<TransactionsBloc>.value(
+      value: getIt<TransactionsBloc>(),
       child: BlocListener<TransactionsBloc, TransactionsState>(
         listener: (context, state) {
           if (state.status == TransactionsStatus.failure) {
@@ -189,41 +190,26 @@ class _TransactionFormState extends State<TransactionForm> {
                   builder: (context, state) {
                     return state.status == TransactionsStatus.submitting
                         ? CircularProgressIndicator()
-                        : ElevatedButton.icon(
+                        : SaveFormButton(
+                            formKey: _formKey,
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                context.read<TransactionsBloc>().add(
-                                  AddTransactionEvent(
-                                    transaction: Transaction(
-                                      id: '',
-                                      title: _titleController.text.trim(),
-                                      amount: double.parse(
-                                        _amountController.text,
-                                      ),
-                                      type: _transactionType,
-                                      categoryId: categorySelectedId,
-                                      description: _descriptionController.text
-                                          .trim(),
-                                      date: selectedDate,
+                              context.read<TransactionsBloc>().add(
+                                AddTransactionEvent(
+                                  transaction: Transaction(
+                                    id: '',
+                                    title: _titleController.text.trim(),
+                                    amount: double.parse(
+                                      _amountController.text,
                                     ),
+                                    type: _transactionType,
+                                    categoryId: categorySelectedId,
+                                    description: _descriptionController.text
+                                        .trim(),
+                                    date: selectedDate,
                                   ),
-                                );
-                              }
+                                ),
+                              );
                             },
-                            icon: Icon(FontAwesomeIcons.floppyDisk),
-                            label: Text(context.translate.save),
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: Size(double.infinity, 48),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              backgroundColor: Theme.of(
-                                context,
-                              ).colorScheme.primary,
-                              foregroundColor: Theme.of(
-                                context,
-                              ).colorScheme.onPrimary,
-                            ),
                           );
                   },
                 ),
