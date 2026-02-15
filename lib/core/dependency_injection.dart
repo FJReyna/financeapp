@@ -21,6 +21,7 @@ import 'package:finance/features/transactions/data/model/transaction_model.dart'
 import 'package:finance/features/transactions/data/repository/transaction_repository_impl.dart';
 import 'package:finance/features/transactions/domain/repository/transaction_repository.dart';
 import 'package:finance/features/transactions/domain/usecase/add_transaction.dart';
+import 'package:finance/features/transactions/domain/usecase/delete_transaction.dart';
 import 'package:finance/features/transactions/domain/usecase/get_all_transactions.dart';
 import 'package:finance/features/transactions/presentation/bloc/categories/categories_bloc.dart';
 import 'package:finance/features/transactions/presentation/bloc/transactions/transactions_bloc.dart';
@@ -64,9 +65,13 @@ Future<void> openAndRegisterBoxes(HiveService hiveService) async {
 Future<void> setUpBlocs() async {
   getIt.registerFactory<StatsBloc>(() => StatsBloc(getIt<GetTopCategories>()));
   getIt.registerLazySingleton<TransactionsBloc>(
-    () =>
-        TransactionsBloc(getIt<GetAllTransactions>(), getIt<AddTransaction>()),
+    () => TransactionsBloc(
+      getIt<GetAllTransactions>(),
+      getIt<AddTransaction>(),
+      getIt<DeleteTransaction>(),
+    ),
   );
+
   getIt.registerSingleton<SettingsBloc>(
     SettingsBloc(getIt<GetSettings>(), getIt<SaveSettings>()),
   );
@@ -127,6 +132,10 @@ Future<void> setUpTransactions(List<String> categoryIds) async {
 
   getIt.registerLazySingleton<AddTransaction>(
     () => AddTransaction(getIt<TransactionRepository>()),
+  );
+
+  getIt.registerLazySingleton<DeleteTransaction>(
+    () => DeleteTransaction(getIt<TransactionRepository>()),
   );
 }
 

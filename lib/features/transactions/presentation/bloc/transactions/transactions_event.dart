@@ -9,3 +9,13 @@ class AddTransactionEvent extends TransactionsEvent {
 
   AddTransactionEvent({required this.transaction});
 }
+
+class DeleteTransactionEvent extends TransactionsEvent {
+  final String transactionId;
+  final String successMessage;
+
+  DeleteTransactionEvent({
+    required this.transactionId,
+    required this.successMessage,
+  });
+}

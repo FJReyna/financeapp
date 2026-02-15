@@ -158,6 +158,18 @@ abstract class AppLocalizations {
   /// **'Add'**
   String get add;
 
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
   /// No description provided for @emptyFieldError.
   ///
   /// In en, this message translates to:
@@ -271,6 +283,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transactions'**
   String get transactionsTitle;
+
+  /// No description provided for @transactionsDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Transaction'**
+  String get transactionsDeleteTitle;
+
+  /// No description provided for @transactionsDeleteMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this transaction?'**
+  String get transactionsDeleteMessage;
+
+  /// No description provided for @transactionsDeleteSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction deleted successfully'**
+  String get transactionsDeleteSuccess;
+
+  /// No description provided for @transactionsDeleteError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete transaction. Please try again.'**
+  String get transactionsDeleteError;
 
   /// No description provided for @addTransactionTitle.
   ///

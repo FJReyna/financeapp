@@ -71,6 +71,20 @@ class _TransactionsPageState extends State<TransactionsPage> {
             context.read<TransactionsBloc>().add(
               GetTransactionsWithCategoryEvent(),
             );
+          } else if (state.status == TransactionsStatus.failure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.errorMessage ?? 'Error'),
+                backgroundColor: Theme.of(context).colorScheme.error,
+              ),
+            );
+          } else if (state.status == TransactionsStatus.submited) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.successMessage ?? ''),
+                backgroundColor: Theme.of(context).colorScheme.primary,
+              ),
+            );
           }
         },
         child: Scaffold(

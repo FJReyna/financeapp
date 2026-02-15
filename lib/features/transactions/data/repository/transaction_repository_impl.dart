@@ -14,9 +14,8 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<void> deleteTransaction(String id) {
-    // TODO: implement deleteTransaction
-    throw UnimplementedError();
+  Future<void> deleteTransaction(String id) async {
+    await localDatasource.delete(id);
   }
 
   @override

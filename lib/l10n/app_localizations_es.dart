@@ -39,6 +39,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get add => 'Agregar';
 
   @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get delete => 'Eliminar';
+
+  @override
   String get emptyFieldError => 'Este campo no puede estar vacío';
 
   @override
@@ -95,6 +101,20 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get transactionsTitle => 'Transacciones';
+
+  @override
+  String get transactionsDeleteTitle => 'Eliminar Transacción';
+
+  @override
+  String get transactionsDeleteMessage =>
+      '¿Estás seguro de que deseas eliminar esta transacción?';
+
+  @override
+  String get transactionsDeleteSuccess => 'Transacción eliminada exitosamente';
+
+  @override
+  String get transactionsDeleteError =>
+      'Error al eliminar la transacción. Por favor, inténtalo de nuevo.';
 
   @override
   String get addTransactionTitle => 'Agregar Transacción';
