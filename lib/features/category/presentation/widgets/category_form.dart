@@ -101,7 +101,7 @@ class _CategoryFormState extends State<CategoryForm> {
                 BlocBuilder<CategoryBloc, CategoryState>(
                   builder: (BuildContext context, CategoryState state) {
                     if (state.status == CategoryStatus.loading) {
-                      return CircularProgressIndicator();
+                      return Center(child: CircularProgressIndicator());
                     } else {
                       return SaveFormButton(
                         formKey: _formKey,

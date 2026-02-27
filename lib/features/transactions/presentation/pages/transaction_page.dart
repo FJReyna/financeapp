@@ -67,4 +67,10 @@ class _TransactionPageState extends State<TransactionPage> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    getIt<TransactionsBloc>().add(GetTransactionsWithCategoryEvent());
+  }
 }
