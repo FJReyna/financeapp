@@ -208,4 +208,8 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get addCategoryColorValidatorError => 'Por favor, selecciona un color';
+
+  @override
+  String get dashboardErrorLoadingData =>
+      'Error al cargar los datos. Por favor, inténtalo de nuevo.';
 }

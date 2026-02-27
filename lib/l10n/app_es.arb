@@ -64,5 +64,6 @@
   "addCategoryIconLabel": "Selecciona un ícono",
   "addCategoryIconValidatorError": "Por favor, selecciona un ícono",
   "addCategoryColorLabel": "Selecciona un color",
-  "addCategoryColorValidatorError": "Por favor, selecciona un color"
+  "addCategoryColorValidatorError": "Por favor, selecciona un color",
+  "dashboardErrorLoadingData": "Error al cargar los datos. Por favor, inténtalo de nuevo."
 }

@@ -1,10 +1,13 @@
 import 'package:finance/core/theme/app_colors.dart';
 import 'package:finance/core/util/extensions.dart';
+import 'package:finance/features/dashboard/domain/entities/income_expense_data.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TotalBalanceCard extends StatelessWidget {
-  const TotalBalanceCard({super.key});
+  final IncomeExpenseData data;
+
+  const TotalBalanceCard({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,7 @@ class TotalBalanceCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              '\$14,250.00',
+              '\$${data.balance.toStringAsFixed(2)}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Divider(),
@@ -46,7 +49,7 @@ class TotalBalanceCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '+\$5,000.00',
+                      '+\$${data.income.toStringAsFixed(2)}',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: AppColors.primary,
                         fontWeight: FontWeight.bold,
@@ -77,7 +80,7 @@ class TotalBalanceCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '-\$2,750.00',
+                      '-\$${data.expense.toStringAsFixed(2)}',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: AppColors.secondary,
                         fontWeight: FontWeight.bold,

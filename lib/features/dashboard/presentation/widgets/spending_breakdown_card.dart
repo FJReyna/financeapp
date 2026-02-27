@@ -1,13 +1,22 @@
 import 'package:finance/core/util/extensions.dart';
+import 'package:finance/features/dashboard/domain/entities/category_spending.dart';
 import 'package:finance/features/dashboard/presentation/widgets/category_breakdown_linear_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class SpendingBreakdownCard extends StatelessWidget {
-  const SpendingBreakdownCard({super.key});
+  final List<CategorySpending> spendingByCategory;
+
+  SpendingBreakdownCard({super.key, required this.spendingByCategory});
 
   final double chartHeight = 300.0;
   final double sectionRadius = 20.0;
+
+  final TextStyle sectionTextStyle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -31,56 +40,16 @@ class SpendingBreakdownCard extends StatelessWidget {
                 children: [
                   PieChart(
                     PieChartData(
-                      sections: [
-                        PieChartSectionData(
+                      sections: spendingByCategory.map((data) {
+                        return PieChartSectionData(
                           showTitle: false,
-                          value: 40,
-                          color: Colors.green,
-                          title: 'Food',
+                          value: data.percentage,
+                          color: data.category.color,
+                          title: data.category.name,
                           radius: sectionRadius,
-                          titleStyle: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        PieChartSectionData(
-                          showTitle: false,
-                          value: 30,
-                          color: Colors.red,
-                          title: 'Transport',
-                          radius: sectionRadius,
-                          titleStyle: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        PieChartSectionData(
-                          showTitle: false,
-                          value: 20,
-                          color: Colors.blue,
-                          title: 'Entertainment',
-                          radius: sectionRadius,
-                          titleStyle: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        PieChartSectionData(
-                          showTitle: false,
-                          value: 10,
-                          color: Colors.orange,
-                          title: 'Other',
-                          radius: sectionRadius,
-                          titleStyle: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
+                          titleStyle: sectionTextStyle,
+                        );
+                      }).toList(),
                       centerSpaceRadius: chartHeight / 4,
                     ),
                   ),
@@ -93,7 +62,7 @@ class SpendingBreakdownCard extends StatelessWidget {
                           style: TextStyle(fontSize: 14, color: Colors.grey),
                         ),
                         Text(
-                          '\$1,150.00',
+                          '\$${spendingByCategory.fold(0.0, (sum, data) => sum + data.amount).toStringAsFixed(2)}',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -106,32 +75,18 @@ class SpendingBreakdownCard extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16),
-            CategoryBreakdownLinearIndicator(
-              color: Colors.green,
-              value: 0.4,
-              title: 'Food',
-              icon: Icons.fastfood,
-            ),
-            SizedBox(height: 8),
-            CategoryBreakdownLinearIndicator(
-              color: Colors.red,
-              value: 0.3,
-              title: 'Transport',
-              icon: Icons.directions_car,
-            ),
-            SizedBox(height: 8),
-            CategoryBreakdownLinearIndicator(
-              color: Colors.blue,
-              value: 0.2,
-              title: 'Entertainment',
-              icon: Icons.movie,
-            ),
-            SizedBox(height: 8),
-            CategoryBreakdownLinearIndicator(
-              color: Colors.orange,
-              value: 0.1,
-              title: 'Other',
-              icon: Icons.more_horiz,
+            Column(
+              children: spendingByCategory.map((data) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                  child: CategoryBreakdownLinearIndicator(
+                    value: data.percentage,
+                    title: data.category.name,
+                    color: data.category.color,
+                    icon: data.category.icon,
+                  ),
+                );
+              }).toList(),
             ),
           ],
         ),

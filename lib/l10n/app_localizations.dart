@@ -487,6 +487,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please select a color'**
   String get addCategoryColorValidatorError;
+
+  /// No description provided for @dashboardErrorLoadingData.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading dashboard data. Please try again.'**
+  String get dashboardErrorLoadingData;
 }
 
 class _AppLocalizationsDelegate

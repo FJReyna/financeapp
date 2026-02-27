@@ -8,6 +8,8 @@ import 'package:finance/features/category/domain/usecases/add_category.dart';
 import 'package:finance/features/category/domain/usecases/get_all_categories.dart';
 import 'package:finance/features/category/domain/usecases/get_top_categories.dart';
 import 'package:finance/features/category/presentation/bloc/category_bloc.dart';
+import 'package:finance/features/dashboard/domain/usecases/get_dashboard_data.dart';
+import 'package:finance/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:finance/features/settings/data/datasource/local/settings_local_datasource.dart';
 import 'package:finance/features/settings/data/model/app_settings_model.dart';
 import 'package:finance/features/settings/data/repository/settings_repository_impl.dart';
@@ -43,7 +45,8 @@ Future<void> setup() async {
   List<String> categoryIds = await setUpCategories();
   await setUpTransactions(categoryIds);
   await setUpSettings();
-  await setUpBlocs();
+  await setUpStats();
+  await setUpDashboard();
 }
 
 Future<void> openAndRegisterBoxes(HiveService hiveService) async {
@@ -63,26 +66,8 @@ Future<void> openAndRegisterBoxes(HiveService hiveService) async {
   getIt.registerSingleton<Box<AppSettingsModel>>(settingsBox);
 }
 
-Future<void> setUpBlocs() async {
+Future<void> setUpStats() async {
   getIt.registerFactory<StatsBloc>(() => StatsBloc(getIt<GetTopCategories>()));
-  getIt.registerLazySingleton<TransactionsBloc>(
-    () => TransactionsBloc(
-      getIt<GetAllTransactions>(),
-      getIt<GetTransaction>(),
-      getIt<AddTransaction>(),
-      getIt<DeleteTransaction>(),
-    ),
-  );
-
-  getIt.registerSingleton<SettingsBloc>(
-    SettingsBloc(getIt<GetSettings>(), getIt<SaveSettings>()),
-  );
-
-  getIt.registerLazySingleton<CategoriesBloc>(
-    () => CategoriesBloc(getIt<GetAllCategories>()),
-  );
-
-  getIt.registerFactory<CategoryBloc>(() => CategoryBloc(getIt<AddCategory>()));
 }
 
 Future<void> setUpSettings() async {
@@ -102,6 +87,10 @@ Future<void> setUpSettings() async {
 
   getIt.registerLazySingleton<SaveSettings>(
     () => SaveSettings(getIt<SettingsRepository>()),
+  );
+
+  getIt.registerSingleton<SettingsBloc>(
+    SettingsBloc(getIt<GetSettings>(), getIt<SaveSettings>()),
   );
 }
 
@@ -143,6 +132,15 @@ Future<void> setUpTransactions(List<String> categoryIds) async {
   getIt.registerLazySingleton<DeleteTransaction>(
     () => DeleteTransaction(getIt<TransactionRepository>()),
   );
+
+  getIt.registerLazySingleton<TransactionsBloc>(
+    () => TransactionsBloc(
+      getIt<GetAllTransactions>(),
+      getIt<GetTransaction>(),
+      getIt<AddTransaction>(),
+      getIt<DeleteTransaction>(),
+    ),
+  );
 }
 
 Future<List<String>> setUpCategories() async {
@@ -177,5 +175,24 @@ Future<List<String>> setUpCategories() async {
     () => AddCategory(getIt<CategoryRepository>()),
   );
 
+  getIt.registerLazySingleton<CategoriesBloc>(
+    () => CategoriesBloc(getIt<GetAllCategories>()),
+  );
+
+  getIt.registerFactory<CategoryBloc>(() => CategoryBloc(getIt<AddCategory>()));
+
   return categoryIds;
+}
+
+Future<void> setUpDashboard() async {
+  getIt.registerFactory<DashboardBloc>(
+    () => DashboardBloc(getIt<GetDashboardData>()),
+  );
+
+  getIt.registerLazySingleton<GetDashboardData>(
+    () => GetDashboardData(
+      getIt<TransactionRepository>(),
+      getIt<CategoryRepository>(),
+    ),
+  );
 }
