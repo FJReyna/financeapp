@@ -16,10 +16,18 @@ class AppSettingsModel {
   @HiveField(2)
   final String locale;
 
+  @HiveField(3)
+  final bool pinEnabled;
+
+  @HiveField(4)
+  final String? pinHash;
+
   AppSettingsModel({
     required this.themeMode,
     required this.currency,
     required this.locale,
+    this.pinEnabled = false,
+    this.pinHash,
   });
 
   factory AppSettingsModel.fromEntity(AppSettings settings) {
@@ -27,6 +35,8 @@ class AppSettingsModel {
       themeMode: settings.themeMode.index,
       currency: settings.currency,
       locale: settings.locale,
+      pinEnabled: settings.pinEnabled,
+      pinHash: settings.pinHash,
     );
   }
 
@@ -35,6 +45,8 @@ class AppSettingsModel {
       themeMode: ThemeMode.values[themeMode],
       currency: currency,
       locale: locale,
+      pinEnabled: pinEnabled,
+      pinHash: pinHash,
     );
   }
 }

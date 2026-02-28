@@ -1,4 +1,5 @@
 import 'package:finance/core/constants/hero_tags.dart';
+import 'package:finance/core/routes/routes.dart';
 import 'package:finance/core/util/currencies.dart';
 import 'package:finance/core/util/extensions.dart';
 import 'package:finance/core/widgets/bottom_nav_bar.dart';
@@ -12,6 +13,7 @@ import 'package:finance/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -120,10 +122,28 @@ class SettingsPage extends StatelessWidget {
                   ),
                   Divider(height: 1, thickness: 1, indent: 16, endIndent: 16),
                   SectionItem(
+                    onPressed: () {
+                      if (state.settings?.pinEnabled ?? false) {
+                        _showDisablePinDialog(context, state);
+                      } else {
+                        context.push(Routes.setupPin);
+                      }
+                    },
                     icon: FontAwesomeIcons.lock,
                     title: 'PIN',
-                    subtitle: '',
+                    subtitle: state.settings?.pinEnabled ?? false
+                        ? context.translate.enabled
+                        : context.translate.disabled,
                     iconColor: Colors.red,
+                    trailing: Icon(
+                      state.settings?.pinEnabled ?? false
+                          ? Icons.toggle_on
+                          : Icons.toggle_off,
+                      size: 32,
+                      color: state.settings?.pinEnabled ?? false
+                          ? Colors.green
+                          : Colors.grey,
+                    ),
                   ),
                 ],
               ),
@@ -158,6 +178,49 @@ class SettingsPage extends StatelessWidget {
       bottomNavigationBar: Hero(
         tag: HeroTags.bottomNavBar,
         child: BottomNavBar(currentIndex: 3),
+      ),
+    );
+  }
+
+  void _showDisablePinDialog(BuildContext context, SettingsState state) {
+    final pinController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(context.translate.settingsDisablePinTitle),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(context.translate.settingsDisablePinMessage),
+            const SizedBox(height: 16),
+            TextField(
+              controller: pinController,
+              keyboardType: TextInputType.number,
+              obscureText: true,
+              maxLength: 6,
+              decoration: const InputDecoration(
+                labelText: 'PIN',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(context.translate.cancel),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              context.read<SettingsBloc>().add(
+                DisablePinEvent(pinController.text),
+              );
+              Navigator.of(dialogContext).pop();
+            },
+            child: Text(context.translate.disable),
+          ),
+        ],
       ),
     );
   }

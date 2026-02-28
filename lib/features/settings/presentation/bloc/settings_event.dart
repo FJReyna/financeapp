@@ -20,3 +20,24 @@ class ChangeCurrencyEvent extends SettingsEvent {
   final String currency;
   ChangeCurrencyEvent(this.currency);
 }
+
+class EnablePinEvent extends SettingsEvent {
+  final String pin;
+  EnablePinEvent(this.pin);
+}
+
+class DisablePinEvent extends SettingsEvent {
+  final String currentPin;
+  DisablePinEvent(this.currentPin);
+}
+
+class ChangePinEvent extends SettingsEvent {
+  final String oldPin;
+  final String newPin;
+  ChangePinEvent(this.oldPin, this.newPin);
+}
+
+class VerifyPinEvent extends SettingsEvent {
+  final String pin;
+  VerifyPinEvent(this.pin);
+}

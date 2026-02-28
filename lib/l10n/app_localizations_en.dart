@@ -45,6 +45,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get delete => 'Delete';
 
   @override
+  String get enabled => 'Enabled';
+
+  @override
+  String get disabled => 'Disabled';
+
+  @override
+  String get disable => 'Disable';
+
+  @override
+  String get tryAgain => 'Try Again';
+
+  @override
   String get emptyFieldError => 'This field cannot be empty';
 
   @override
@@ -188,6 +200,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsSyncData => 'Cloud Sync';
+
+  @override
+  String get settingsDisablePinTitle => 'Disable PIN';
+
+  @override
+  String get settingsDisablePinMessage => 'Enter your PIN to disable it.';
+
+  @override
+  String get settingsSetPinMessage => 'Enter a 4-6 digit PIN.';
+
+  @override
+  String get settingsConfirmPinMessage => 'Confirm your PIN.';
+
+  @override
+  String get settingsPinMismatchMessage => 'PINs do not match. Try again.';
+
+  @override
+  String get settingsSetupPinTitle => 'Setup PIN';
+
+  @override
+  String get settingsPinEnabledSuccessMessage => 'PIN enabled successfully';
+
+  @override
+  String get settingsPinEnabledErrorMessage =>
+      'Error enabling PIN. Please try again.';
+
+  @override
+  String get settingsPINStartOver => 'Start over';
+
+  @override
+  String get settingsEnterYourPin => 'Enter your PIN';
+
+  @override
+  String get pinToomanyAttemptsMessage =>
+      'Too many incorrect attempts. App locked.';
+
+  @override
+  String pinAttemptsRemainingMessage(int attempts) {
+    return 'Incorrect PIN. $attempts attempts remaining';
+  }
 
   @override
   String get addCategoryTitle => 'Add Category';

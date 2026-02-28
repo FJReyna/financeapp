@@ -170,6 +170,30 @@ abstract class AppLocalizations {
   /// **'Delete'**
   String get delete;
 
+  /// No description provided for @enabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled'**
+  String get enabled;
+
+  /// No description provided for @disabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled'**
+  String get disabled;
+
+  /// No description provided for @disable.
+  ///
+  /// In en, this message translates to:
+  /// **'Disable'**
+  String get disable;
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get tryAgain;
+
   /// No description provided for @emptyFieldError.
   ///
   /// In en, this message translates to:
@@ -451,6 +475,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cloud Sync'**
   String get settingsSyncData;
+
+  /// No description provided for @settingsDisablePinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Disable PIN'**
+  String get settingsDisablePinTitle;
+
+  /// No description provided for @settingsDisablePinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your PIN to disable it.'**
+  String get settingsDisablePinMessage;
+
+  /// No description provided for @settingsSetPinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a 4-6 digit PIN.'**
+  String get settingsSetPinMessage;
+
+  /// No description provided for @settingsConfirmPinMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your PIN.'**
+  String get settingsConfirmPinMessage;
+
+  /// No description provided for @settingsPinMismatchMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'PINs do not match. Try again.'**
+  String get settingsPinMismatchMessage;
+
+  /// No description provided for @settingsSetupPinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Setup PIN'**
+  String get settingsSetupPinTitle;
+
+  /// No description provided for @settingsPinEnabledSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN enabled successfully'**
+  String get settingsPinEnabledSuccessMessage;
+
+  /// No description provided for @settingsPinEnabledErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Error enabling PIN. Please try again.'**
+  String get settingsPinEnabledErrorMessage;
+
+  /// No description provided for @settingsPINStartOver.
+  ///
+  /// In en, this message translates to:
+  /// **'Start over'**
+  String get settingsPINStartOver;
+
+  /// No description provided for @settingsEnterYourPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your PIN'**
+  String get settingsEnterYourPin;
+
+  /// No description provided for @pinToomanyAttemptsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many incorrect attempts. App locked.'**
+  String get pinToomanyAttemptsMessage;
+
+  /// Message shown when the user enters an incorrect PIN, indicating how many attempts are left before the app locks.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect PIN. {attempts} attempts remaining'**
+  String pinAttemptsRemainingMessage(int attempts);
 
   /// No description provided for @addCategoryTitle.
   ///

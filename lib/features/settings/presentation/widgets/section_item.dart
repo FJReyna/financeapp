@@ -7,6 +7,7 @@ class SectionItem extends StatelessWidget {
   final String subtitle;
   final Color iconColor;
   final Function()? onPressed;
+  final Widget? trailing;
 
   const SectionItem({
     super.key,
@@ -15,6 +16,7 @@ class SectionItem extends StatelessWidget {
     required this.subtitle,
     required this.iconColor,
     this.onPressed,
+    this.trailing,
   });
 
   @override
@@ -53,7 +55,7 @@ class SectionItem extends StatelessWidget {
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 ),
               ),
-              Icon(FontAwesomeIcons.chevronRight, size: 12),
+              trailing ?? Icon(FontAwesomeIcons.chevronRight, size: 12),
             ],
           ),
         ),

@@ -45,6 +45,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get delete => 'Eliminar';
 
   @override
+  String get enabled => 'Activado';
+
+  @override
+  String get disabled => 'Desactivado';
+
+  @override
+  String get disable => 'Desactivar';
+
+  @override
+  String get tryAgain => 'Intentar de nuevo';
+
+  @override
   String get emptyFieldError => 'Este campo no puede estar vacío';
 
   @override
@@ -190,6 +202,47 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingsSyncData => 'Sincronización en la Nube';
+
+  @override
+  String get settingsDisablePinTitle => 'Desactivar PIN';
+
+  @override
+  String get settingsDisablePinMessage => 'Ingresa tu PIN para desactivarlo.';
+
+  @override
+  String get settingsSetPinMessage => 'Ingresa un nuevo PIN de 4-6 dígitos.';
+
+  @override
+  String get settingsConfirmPinMessage => 'Confirma tu PIN.';
+
+  @override
+  String get settingsPinMismatchMessage =>
+      'Los PIN no coinciden. Inténtalo de nuevo.';
+
+  @override
+  String get settingsSetupPinTitle => 'Configurar PIN';
+
+  @override
+  String get settingsPinEnabledSuccessMessage => 'PIN activado exitosamente';
+
+  @override
+  String get settingsPinEnabledErrorMessage =>
+      'Error al activar el PIN. Por favor, inténtalo de nuevo.';
+
+  @override
+  String get settingsPINStartOver => 'Empezar de nuevo';
+
+  @override
+  String get settingsEnterYourPin => 'Ingresa tu PIN';
+
+  @override
+  String get pinToomanyAttemptsMessage =>
+      'Demasiados intentos fallidos. App bloqueada.';
+
+  @override
+  String pinAttemptsRemainingMessage(int attempts) {
+    return 'PIN incorrecto. Quedan $attempts intentos';
+  }
 
   @override
   String get addCategoryTitle => 'Agregar Categoría';

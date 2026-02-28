@@ -6,4 +6,6 @@ class Routes {
   static const String addTransaction = '/add_transaction';
   static const String addCategory = '/add_category';
   static const String transaction = '/transaction';
+  static const String setupPin = '/setup_pin';
+  static const String verifyPin = '/verify_pin';
 }

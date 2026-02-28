@@ -12,6 +12,10 @@
   "add": "Add",
   "cancel": "Cancel",
   "delete": "Delete",
+  "enabled": "Enabled",
+  "disabled": "Disabled",
+  "disable": "Disable",
+  "tryAgain": "Try Again",
   "emptyFieldError": "This field cannot be empty",
   "emptyAmountError": "Amount cannot be empty",
   "validAmountError": "Please enter a valid amount greater than zero",
@@ -59,6 +63,27 @@
   "settingsExportData": "Export Data",
   "settingsImportData": "Import Data",
   "settingsSyncData": "Cloud Sync",
+  "settingsDisablePinTitle": "Disable PIN",
+  "settingsDisablePinMessage": "Enter your PIN to disable it.",
+  "settingsSetPinMessage": "Enter a 4 digit PIN.",
+  "settingsConfirmPinMessage": "Confirm your PIN.",
+  "settingsPinMismatchMessage": "PINs do not match. Try again.",
+  "settingsSetupPinTitle": "Setup PIN",
+  "settingsPinEnabledSuccessMessage": "PIN enabled successfully",
+  "settingsPinEnabledErrorMessage": "Error enabling PIN. Please try again.",
+  "settingsPINStartOver": "Start over",
+  "settingsEnterYourPin": "Enter your PIN",
+  "pinToomanyAttemptsMessage": "Too many incorrect attempts. App locked.",
+  "pinAttemptsRemainingMessage": "Incorrect PIN. {attempts} attempts remaining",
+  "@pinAttemptsRemainingMessage": {
+    "description": "Message shown when the user enters an incorrect PIN, indicating how many attempts are left before the app locks.",
+    "placeholders": {
+      "attempts": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
   "addCategoryTitle": "Add Category",
   "addCategoryNameLabel": "Category Name",
   "addCategoryIconLabel": "Select an icon",
