@@ -1,4 +1,5 @@
 import 'package:finance/core/theme/app_colors.dart';
+import 'package:finance/features/stats/domain/entities/bar_chart_point.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -6,15 +7,19 @@ enum BarChartType { week, month, year }
 
 class BarCharStats extends StatefulWidget {
   final BarChartType type;
+  final List<BarChartPoint> chartData;
 
-  const BarCharStats({super.key, required this.type});
+  const BarCharStats({
+    super.key,
+    required this.type,
+    this.chartData = const [],
+  });
 
   @override
   State<BarCharStats> createState() => _BarCharStatsState();
 }
 
 class _BarCharStatsState extends State<BarCharStats> {
-  double width = 7;
   int touchedGroupIndex = -1;
 
   late List<BarChartGroupData> rawBarGroups;
@@ -23,17 +28,54 @@ class _BarCharStatsState extends State<BarCharStats> {
   @override
   void initState() {
     super.initState();
+    _initData();
+  }
+
+  @override
+  void didUpdateWidget(BarCharStats oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.chartData != widget.chartData ||
+        oldWidget.type != widget.type) {
+      _initData();
+    }
+  }
+
+  void _initData() {
+    if (widget.chartData.isEmpty) {
+      rawBarGroups = [];
+      showingBarGroups = [];
+      return;
+    }
+
+    rawBarGroups = widget.chartData.map((point) {
+      return _makeGroupData(point.index, point.income, point.expense);
+    }).toList();
+
+    showingBarGroups = rawBarGroups;
+  }
+
+  double get _barWidth {
     switch (widget.type) {
       case BarChartType.week:
-        initWeekData();
-        break;
+        return 7.0;
       case BarChartType.month:
-        initMonthData();
-        break;
+        return 5.0;
       case BarChartType.year:
-        initYearData();
-        break;
+        return 12.0;
     }
+  }
+
+  double get _maxY {
+    if (widget.chartData.isEmpty) return 20.0;
+
+    final maxValue = widget.chartData.fold<double>(0.0, (max, point) {
+      final pointMax = point.income > point.expense
+          ? point.income
+          : point.expense;
+      return pointMax > max ? pointMax : max;
+    });
+
+    return ((maxValue / 1000).ceil() * 1000).toDouble();
   }
 
   Widget leftTitles(double value, TitleMeta meta) {
@@ -42,16 +84,22 @@ class _BarCharStatsState extends State<BarCharStats> {
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
+
+    final double interval = _maxY / 3;
     String text;
+
     if (value == 0) {
-      text = '1K';
-    } else if (value == 10) {
-      text = '5K';
-    } else if (value == 19) {
-      text = '10K';
+      text = '0';
+    } else if ((value - interval).abs() < 0.1) {
+      text = '\$${(interval / 1000).toStringAsFixed(0)}K';
+    } else if ((value - interval * 2).abs() < 0.1) {
+      text = '\$${(interval * 2 / 1000).toStringAsFixed(0)}K';
+    } else if ((value - _maxY).abs() < 0.1) {
+      text = '\$${(_maxY / 1000).toStringAsFixed(0)}K';
     } else {
       return Container();
     }
+
     return SideTitleWidget(
       meta: meta,
       space: 0,
@@ -60,35 +108,14 @@ class _BarCharStatsState extends State<BarCharStats> {
   }
 
   Widget bottomTitles(double value, TitleMeta meta, BarChartType type) {
-    List<String> titles = <String>['Mn', 'Te', 'Wd', 'Tu', 'Fr', 'St', 'Su'];
-
-    switch (type) {
-      case BarChartType.week:
-        titles = <String>['Mn', 'Te', 'Wd', 'Tu', 'Fr', 'St', 'Su'];
-        break;
-      case BarChartType.month:
-        titles = <String>['W1', 'W2', 'W3', 'W4', 'W5'];
-        break;
-      case BarChartType.year:
-        titles = <String>[
-          'Jan',
-          'Feb',
-          'Mar',
-          'Apr',
-          'May',
-          'Jun',
-          'Jul',
-          'Aug',
-          'Sep',
-          'Oct',
-          'Nov',
-          'Dec',
-        ];
-        break;
+    if (widget.chartData.isEmpty || value.toInt() >= widget.chartData.length) {
+      return const SizedBox.shrink();
     }
 
+    final label = widget.chartData[value.toInt()].label;
+
     final Widget text = Text(
-      titles[value.toInt()],
+      label,
       style: const TextStyle(
         color: Color(0xff7589a2),
         fontWeight: FontWeight.bold,
@@ -99,77 +126,41 @@ class _BarCharStatsState extends State<BarCharStats> {
     return SideTitleWidget(meta: meta, space: 16, child: text);
   }
 
-  BarChartGroupData makeGroupData(int x, double y1, double y2) {
+  BarChartGroupData _makeGroupData(int x, double y1, double y2) {
     return BarChartGroupData(
       barsSpace: 1,
       x: x,
       barRods: [
-        BarChartRodData(toY: y1, color: AppColors.primary, width: width),
-        BarChartRodData(toY: y2, color: AppColors.secondary, width: width),
+        BarChartRodData(toY: y1, color: AppColors.primary, width: _barWidth),
+        BarChartRodData(toY: y2, color: AppColors.secondary, width: _barWidth),
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.chartData.isEmpty) {
+      return SizedBox(
+        height: 400,
+        child: Card(
+          margin: const EdgeInsets.all(8),
+          child: Center(
+            child: Text(
+              'No data available',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ),
+        ),
+      );
+    }
+
     return SizedBox(
       height: 400,
-      //width: MediaQuery.of(context).size.width * 0.75,
       child: Card(
         margin: const EdgeInsets.all(8),
         child: BarChart(
           BarChartData(
-            maxY: 20,
-            barTouchData: BarTouchData(
-              touchTooltipData: BarTouchTooltipData(
-                getTooltipColor: ((group) {
-                  return Colors.grey;
-                }),
-                getTooltipItem: (a, b, c, d) => null,
-              ),
-              touchCallback: (FlTouchEvent event, response) {
-                if (response == null || response.spot == null) {
-                  setState(() {
-                    touchedGroupIndex = -1;
-                    showingBarGroups = List.of(rawBarGroups);
-                  });
-                  return;
-                }
-
-                touchedGroupIndex = response.spot!.touchedBarGroupIndex;
-
-                setState(() {
-                  if (!event.isInterestedForInteractions) {
-                    touchedGroupIndex = -1;
-                    showingBarGroups = List.of(rawBarGroups);
-                    return;
-                  }
-                  showingBarGroups = List.of(rawBarGroups);
-                  if (touchedGroupIndex != -1) {
-                    var sum = 0.0;
-                    for (final rod
-                        in showingBarGroups[touchedGroupIndex].barRods) {
-                      sum += rod.toY;
-                    }
-                    final avg =
-                        sum /
-                        showingBarGroups[touchedGroupIndex].barRods.length;
-
-                    showingBarGroups[touchedGroupIndex] =
-                        showingBarGroups[touchedGroupIndex].copyWith(
-                          barRods: showingBarGroups[touchedGroupIndex].barRods
-                              .map((rod) {
-                                return rod.copyWith(
-                                  toY: avg,
-                                  color: Colors.blue,
-                                );
-                              })
-                              .toList(),
-                        );
-                  }
-                });
-              },
-            ),
+            maxY: _maxY,
             titlesData: FlTitlesData(
               show: true,
               rightTitles: const AxisTitles(
@@ -189,8 +180,8 @@ class _BarCharStatsState extends State<BarCharStats> {
               leftTitles: AxisTitles(
                 sideTitles: SideTitles(
                   showTitles: true,
-                  reservedSize: 28,
-                  interval: 1,
+                  reservedSize: 40,
+                  interval: _maxY / 3,
                   getTitlesWidget: (value, meta) => leftTitles(value, meta),
                 ),
               ),
@@ -202,84 +193,5 @@ class _BarCharStatsState extends State<BarCharStats> {
         ),
       ),
     );
-  }
-
-  void initWeekData() {
-    width = 7;
-    final barGroup1 = makeGroupData(0, 5, 12);
-    final barGroup2 = makeGroupData(1, 16, 12);
-    final barGroup3 = makeGroupData(2, 18, 5);
-    final barGroup4 = makeGroupData(3, 20, 16);
-    final barGroup5 = makeGroupData(4, 17, 6);
-    final barGroup6 = makeGroupData(5, 19, 1.5);
-    final barGroup7 = makeGroupData(6, 10, 1.5);
-
-    final items = [
-      barGroup1,
-      barGroup2,
-      barGroup3,
-      barGroup4,
-      barGroup5,
-      barGroup6,
-      barGroup7,
-    ];
-
-    rawBarGroups = items;
-
-    showingBarGroups = rawBarGroups;
-  }
-
-  void initMonthData() {
-    width = 5;
-
-    final barGroup1 = makeGroupData(0, 5, 12);
-    final barGroup2 = makeGroupData(1, 16, 12);
-    final barGroup3 = makeGroupData(2, 18, 5);
-    final barGroup4 = makeGroupData(3, 20, 16);
-    final barGroup5 = makeGroupData(4, 17, 6);
-
-    final items = [barGroup1, barGroup2, barGroup3, barGroup4, barGroup5];
-
-    rawBarGroups = items;
-
-    showingBarGroups = rawBarGroups;
-  }
-
-  void initYearData() {
-    width = 12;
-
-    width = 12;
-
-    final barGroup1 = makeGroupData(0, 5, 12);
-    final barGroup2 = makeGroupData(1, 16, 12);
-    final barGroup3 = makeGroupData(2, 18, 5);
-    final barGroup4 = makeGroupData(3, 20, 16);
-    final barGroup5 = makeGroupData(4, 17, 6);
-    final barGroup6 = makeGroupData(5, 5, 12);
-    final barGroup7 = makeGroupData(6, 16, 12);
-    final barGroup8 = makeGroupData(7, 18, 5);
-    final barGroup9 = makeGroupData(8, 20, 16);
-    final barGroup10 = makeGroupData(9, 17, 6);
-    final barGroup11 = makeGroupData(10, 17, 6);
-    final barGroup12 = makeGroupData(11, 17, 6);
-
-    final items = [
-      barGroup1,
-      barGroup2,
-      barGroup3,
-      barGroup4,
-      barGroup5,
-      barGroup6,
-      barGroup7,
-      barGroup8,
-      barGroup9,
-      barGroup10,
-      barGroup11,
-      barGroup12,
-    ];
-
-    rawBarGroups = items;
-
-    showingBarGroups = rawBarGroups;
   }
 }

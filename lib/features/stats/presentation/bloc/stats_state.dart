@@ -1,28 +1,28 @@
-import 'package:finance/features/category/domain/entites/category.dart';
+import 'package:finance/features/stats/domain/entities/stats_data.dart';
 
-enum TopCategoriesStatus { initial, loading, success, failure }
+enum StatsStatus { initial, loading, success, failure }
 
 class StatsState {
-  final TopCategoriesStatus topCategoriesStatus;
-  final List<Category> topCategories;
+  final StatsStatus status;
+  final StatsData? statsData;
   final String? errorMessage;
 
-  StatsState._({
-    this.topCategoriesStatus = TopCategoriesStatus.initial,
-    this.topCategories = const [],
+  const StatsState._({
+    this.status = StatsStatus.initial,
+    this.statsData,
     this.errorMessage,
   });
 
-  factory StatsState.initial() => StatsState._();
+  factory StatsState.initial() => const StatsState._();
 
   StatsState copyWith({
-    TopCategoriesStatus? topCategoriesStatus,
-    List<Category>? topCategories,
+    StatsStatus? status,
+    StatsData? statsData,
     String? errorMessage,
   }) {
     return StatsState._(
-      topCategoriesStatus: topCategoriesStatus ?? this.topCategoriesStatus,
-      topCategories: topCategories ?? this.topCategories,
+      status: status ?? this.status,
+      statsData: statsData ?? this.statsData,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }

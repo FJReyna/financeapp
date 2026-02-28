@@ -1,5 +1,6 @@
 import 'package:finance/core/dependency_injection.dart';
 import 'package:finance/core/util/extensions.dart';
+import 'package:finance/features/stats/domain/usecases/get_stats_data.dart';
 import 'package:finance/features/stats/presentation/bloc/stats_bloc.dart';
 import 'package:finance/features/stats/presentation/bloc/stats_event.dart';
 import 'package:finance/features/stats/presentation/bloc/stats_state.dart';
@@ -24,60 +25,87 @@ class StatsTab extends StatelessWidget {
     }
   }
 
+  StatsPeriod _toStatsPeriod(BarChartType type) {
+    switch (type) {
+      case BarChartType.week:
+        return StatsPeriod.week;
+      case BarChartType.month:
+        return StatsPeriod.month;
+      case BarChartType.year:
+        return StatsPeriod.year;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<StatsBloc>(
-      create: (context) =>
-          getIt<StatsBloc>()..add(GetTopCategoriesStatsEvent()),
-      child: ListView(
-        padding: const EdgeInsets.all(16.0),
-        children: [
-          Column(
+      create: (context) => getIt<StatsBloc>()
+        ..add(LoadStatsData(period: _toStatsPeriod(type))),
+      child: BlocBuilder<StatsBloc, StatsState>(
+        builder: (context, state) {
+          return ListView(
+            padding: const EdgeInsets.all(16.0),
             children: [
-              Text(
-                '${context.translate.statisticsTotalSpent} ${_getTotalSpentText(type, context).toLowerCase()}',
-                style: Theme.of(context).textTheme.bodyLarge,
+              Column(
+                children: [
+                  Text(
+                    '${context.translate.statisticsTotalSpent} ${_getTotalSpentText(type, context).toLowerCase()}',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  if (state.status == StatsStatus.loading)
+                    const CircularProgressIndicator()
+                  else if (state.status == StatsStatus.success &&
+                      state.statsData != null)
+                    Text(
+                      '\$${state.statsData!.totalExpense.toStringAsFixed(2)}',
+                      style:
+                          Theme.of(context).textTheme.headlineLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                    )
+                  else
+                    Text(
+                      '\$0.00',
+                      style:
+                          Theme.of(context).textTheme.headlineLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                    ),
+                ],
               ),
-              Text(
-                '\$2450.00',
-                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+              const SizedBox(height: 16),
+              BarCharStats(
+                type: type,
+                chartData: state.statsData?.chartData ?? [],
               ),
-            ],
-          ),
-          SizedBox(height: 16),
-          BarCharStats(type: type),
-          SizedBox(height: 16),
-          Text(
-            context.translate.statisticsTopCategories,
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          SizedBox(height: 16),
-          BlocBuilder<StatsBloc, StatsState>(
-            builder: (context, state) {
-              if (state.topCategoriesStatus == TopCategoriesStatus.loading) {
-                return Center(child: CircularProgressIndicator());
-              } else if (state.topCategoriesStatus ==
-                  TopCategoriesStatus.failure) {
-                return Center(child: Text('Failed to load top categories'));
-              } else if (state.topCategoriesStatus ==
-                  TopCategoriesStatus.success) {
-                return Column(
-                  children: state.topCategories.map((category) {
+              const SizedBox(height: 16),
+              Text(
+                context.translate.statisticsTopCategories,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 16),
+              if (state.status == StatsStatus.loading)
+                const Center(child: CircularProgressIndicator())
+              else if (state.status == StatsStatus.failure)
+                Center(
+                    child: Text(
+                        state.errorMessage ?? 'Failed to load statistics'))
+              else if (state.status == StatsStatus.success &&
+                  state.statsData != null)
+                Column(
+                  children: state.statsData!.topCategories.map((category) {
                     return CategoryDesc(
-                      icon: category.icon,
-                      iconColor: category.color,
-                      title: category.localizedName(context),
+                      icon: category.category.icon,
+                      iconColor: category.category.color,
+                      title: category.category.localizedName(context),
                     );
                   }).toList(),
-                );
-              } else {
-                return SizedBox.shrink();
-              }
-            },
-          ),
-        ],
+                )
+              else
+                const SizedBox.shrink(),
+            ],
+          );
+        },
       ),
     );
   }

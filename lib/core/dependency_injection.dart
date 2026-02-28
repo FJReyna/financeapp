@@ -17,6 +17,7 @@ import 'package:finance/features/settings/domain/repository/settings_repository.
 import 'package:finance/features/settings/domain/usecase/get_settings.dart';
 import 'package:finance/features/settings/domain/usecase/save_settings.dart';
 import 'package:finance/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:finance/features/stats/domain/usecases/get_stats_data.dart';
 import 'package:finance/features/stats/presentation/bloc/stats_bloc.dart';
 import 'package:finance/features/transactions/data/datasource/transaction_local_datasource.dart';
 import 'package:finance/features/transactions/data/model/transaction_model.dart';
@@ -67,7 +68,16 @@ Future<void> openAndRegisterBoxes(HiveService hiveService) async {
 }
 
 Future<void> setUpStats() async {
-  getIt.registerFactory<StatsBloc>(() => StatsBloc(getIt<GetTopCategories>()));
+  getIt.registerLazySingleton<GetStatsData>(
+    () => GetStatsData(
+      getIt<TransactionRepository>(),
+      getIt<CategoryRepository>(),
+    ),
+  );
+  
+  getIt.registerFactory<StatsBloc>(
+    () => StatsBloc(getIt<GetStatsData>()),
+  );
 }
 
 Future<void> setUpSettings() async {
