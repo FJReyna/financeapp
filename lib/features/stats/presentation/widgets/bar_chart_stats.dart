@@ -2,6 +2,7 @@ import 'package:finance/core/theme/app_colors.dart';
 import 'package:finance/features/stats/domain/entities/bar_chart_point.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 enum BarChartType { week, month, year }
 
@@ -107,12 +108,35 @@ class _BarCharStatsState extends State<BarCharStats> {
     );
   }
 
-  Widget bottomTitles(double value, TitleMeta meta, BarChartType type) {
+  String _getLabel(int index, BarChartType type, String localeName) {
+    switch (type) {
+      case BarChartType.week:
+        final now = DateTime.now();
+        final daysSinceMonday = (now.weekday - DateTime.monday + 7) % 7;
+        final monday = now.subtract(Duration(days: daysSinceMonday));
+        final day = monday.add(Duration(days: index));
+        return DateFormat.E(localeName).format(day);
+      case BarChartType.month:
+        return 'W${index + 1}';
+      case BarChartType.year:
+        final date = DateTime(DateTime.now().year, index + 1, 1);
+        return DateFormat.MMM(localeName).format(date);
+    }
+  }
+
+  Widget bottomTitles(
+    double value,
+    TitleMeta meta,
+    BarChartType type,
+    BuildContext context,
+  ) {
     if (widget.chartData.isEmpty || value.toInt() >= widget.chartData.length) {
       return const SizedBox.shrink();
     }
 
-    final label = widget.chartData[value.toInt()].label;
+    final Locale locale = Localizations.localeOf(context);
+    final int index = value.toInt();
+    final String label = _getLabel(index, type, locale.toString());
 
     final Widget text = Text(
       label,
@@ -173,7 +197,7 @@ class _BarCharStatsState extends State<BarCharStats> {
                 sideTitles: SideTitles(
                   showTitles: true,
                   getTitlesWidget: (value, meta) =>
-                      bottomTitles(value, meta, widget.type),
+                      bottomTitles(value, meta, widget.type, context),
                   reservedSize: 42,
                 ),
               ),

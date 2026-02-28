@@ -140,15 +140,6 @@ class GetStatsData extends UseCase<StatsData, StatsParams> {
   }
 
   List<BarChartPoint> _calculateWeekChartData(List<Transaction> transactions) {
-    const List<String> labels = [
-      'Mon',
-      'Tue',
-      'Wed',
-      'Thu',
-      'Fri',
-      'Sat',
-      'Sun',
-    ];
     final now = DateTime.now();
     final Map<int, BarChartPoint> dayData = {};
 
@@ -157,7 +148,6 @@ class GetStatsData extends UseCase<StatsData, StatsParams> {
         index: i,
         income: 0.0,
         expense: 0.0,
-        label: labels[i],
       );
     }
 
@@ -182,7 +172,6 @@ class GetStatsData extends UseCase<StatsData, StatsParams> {
               (transaction.type == TransactionType.expense
                   ? transaction.amount
                   : 0),
-          label: labels[dayIndex],
         );
       }
     }
@@ -202,7 +191,6 @@ class GetStatsData extends UseCase<StatsData, StatsParams> {
         index: i,
         income: 0.0,
         expense: 0.0,
-        label: 'W${i + 1}',
       );
     }
 
@@ -225,7 +213,6 @@ class GetStatsData extends UseCase<StatsData, StatsParams> {
               (transaction.type == TransactionType.expense
                   ? transaction.amount
                   : 0),
-          label: 'W${weekNumber + 1}',
         );
       }
     }
@@ -234,21 +221,6 @@ class GetStatsData extends UseCase<StatsData, StatsParams> {
   }
 
   List<BarChartPoint> _calculateYearChartData(List<Transaction> transactions) {
-    const List<String> labels = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-
     final Map<int, BarChartPoint> monthData = {};
 
     for (int i = 0; i < 12; i++) {
@@ -256,7 +228,6 @@ class GetStatsData extends UseCase<StatsData, StatsParams> {
         index: i,
         income: 0.0,
         expense: 0.0,
-        label: labels[i],
       );
     }
 
@@ -278,7 +249,6 @@ class GetStatsData extends UseCase<StatsData, StatsParams> {
               (transaction.type == TransactionType.expense
                   ? transaction.amount
                   : 0),
-          label: labels[monthIndex],
         );
       }
     }
