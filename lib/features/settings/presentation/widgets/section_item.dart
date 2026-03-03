@@ -6,6 +6,8 @@ class SectionItem extends StatelessWidget {
   final String title;
   final String subtitle;
   final Color iconColor;
+  final Function()? onPressed;
+  final Widget? trailing;
 
   const SectionItem({
     super.key,
@@ -13,6 +15,8 @@ class SectionItem extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.iconColor,
+    this.onPressed,
+    this.trailing,
   });
 
   @override
@@ -20,7 +24,7 @@ class SectionItem extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () {},
+        onTap: onPressed,
         borderRadius: BorderRadius.zero,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
@@ -51,7 +55,7 @@ class SectionItem extends StatelessWidget {
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 ),
               ),
-              Icon(FontAwesomeIcons.chevronRight, size: 12),
+              trailing ?? Icon(FontAwesomeIcons.chevronRight, size: 12),
             ],
           ),
         ),

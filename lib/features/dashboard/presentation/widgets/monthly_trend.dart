@@ -1,21 +1,45 @@
 import 'package:finance/core/theme/app_colors.dart';
+import 'package:finance/core/util/extensions.dart';
+import 'package:finance/features/dashboard/domain/entities/trend_point.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class MonthlyTrend extends StatelessWidget {
-  const MonthlyTrend({super.key});
+  final List<TrendPoint> trendPoints;
 
-  LineChartData get sampleData => LineChartData(
-    lineTouchData: lineTouchData1,
-    gridData: gridData,
-    titlesData: titlesData1,
-    borderData: borderData,
-    lineBarsData: lineBarsData1,
-    minX: 1,
-    maxX: 28,
-    maxY: 4,
-    minY: 0,
-  );
+  const MonthlyTrend(this.trendPoints, {super.key});
+
+  LineChartData get sampleData {
+    final double maxIncome = trendPoints.isEmpty
+        ? 1000.0
+        : trendPoints
+              .map((TrendPoint point) => point.income)
+              .reduce((a, b) => a > b ? a : b);
+    final double maxExpense = trendPoints.isEmpty
+        ? 1000.0
+        : trendPoints
+              .map((TrendPoint point) => point.expense)
+              .reduce((a, b) => a > b ? a : b);
+    final double maxY = (maxIncome > maxExpense ? maxIncome : maxExpense) * 1.2;
+
+    final double maxX = trendPoints.isEmpty
+        ? 28.0
+        : trendPoints
+              .map((TrendPoint point) => point.x)
+              .reduce((a, b) => a > b ? a : b);
+
+    return LineChartData(
+      lineTouchData: lineTouchData1,
+      gridData: gridData,
+      titlesData: titlesData1,
+      borderData: borderData,
+      lineBarsData: lineBarsData1,
+      minX: 0,
+      maxX: maxX + 7,
+      maxY: maxY,
+      minY: 0,
+    );
+  }
 
   List<LineChartBarData> get lineBarsData1 => [
     lineChartBarData1_1,
@@ -24,40 +48,46 @@ class MonthlyTrend extends StatelessWidget {
 
   LineChartBarData get lineChartBarData1_1 => LineChartBarData(
     isCurved: true,
+    preventCurveOverShooting: true,
     color: Colors.green,
     barWidth: 4,
     isStrokeCapRound: true,
-    dotData: const FlDotData(show: false),
+    dotData: const FlDotData(show: true),
     belowBarData: BarAreaData(show: false),
-    spots: const [
-      FlSpot(1, 1),
-      FlSpot(7, 2.5),
-      FlSpot(14, 2.7),
-      FlSpot(21, 2.4),
-      FlSpot(28, 2.6),
-    ],
+    spots: trendPoints
+        .map((TrendPoint point) => FlSpot(point.x, point.income))
+        .toList(),
   );
 
   LineChartBarData get lineChartBarData1_2 => LineChartBarData(
     isCurved: true,
+    preventCurveOverShooting: true,
     color: Colors.pink,
     barWidth: 4,
     isStrokeCapRound: true,
-    dotData: const FlDotData(show: false),
-    belowBarData: BarAreaData(show: false, color: Colors.pink),
-    spots: const [
-      FlSpot(1, 0.8),
-      FlSpot(7, 1.8),
-      FlSpot(14, 1.2),
-      FlSpot(21, 1.8),
-      FlSpot(28, 1.8),
-    ],
+    dotData: const FlDotData(show: true),
+    belowBarData: BarAreaData(show: false),
+    spots: trendPoints
+        .map((TrendPoint point) => FlSpot(point.x, point.expense))
+        .toList(),
   );
 
   LineTouchData get lineTouchData1 => LineTouchData(
     handleBuiltInTouches: true,
     touchTooltipData: LineTouchTooltipData(
       getTooltipColor: (touchedSpot) => Colors.blueGrey.withValues(alpha: 0.8),
+      getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
+        return touchedBarSpots.map((barSpot) {
+          final weekNumber = (barSpot.x / 7).round();
+          final flSpot = barSpot;
+          final isIncome = flSpot.barIndex == 0;
+
+          return LineTooltipItem(
+            '${isIncome ? 'Income' : 'Expense'}: \$${flSpot.y.toStringAsFixed(2)}\nW$weekNumber',
+            const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          );
+        }).toList();
+      },
     ),
   );
 
@@ -88,11 +118,13 @@ class MonthlyTrend extends StatelessWidget {
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
-    String text = switch (value.toInt()) {
-      7 => 'W1',
-      14 => 'W2',
-      21 => 'W3',
-      28 => 'W4',
+    final weekNumber = (value / 7).round();
+
+    String text = switch (weekNumber) {
+      1 => 'W1',
+      2 => 'W2',
+      3 => 'W3',
+      4 => 'W4',
       _ => '',
     };
 
@@ -106,7 +138,7 @@ class MonthlyTrend extends StatelessWidget {
   SideTitles get bottomTitles => SideTitles(
     showTitles: true,
     reservedSize: 32,
-    interval: 1,
+    interval: 7,
     getTitlesWidget: bottomTitleWidgets,
   );
 
@@ -120,7 +152,7 @@ class MonthlyTrend extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Monthly Trend',
+              context.translate.dashboardMonthlyTrend,
               style: Theme.of(
                 context,
               ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
