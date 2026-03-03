@@ -210,7 +210,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settingsDisablePinMessage => 'Ingresa tu PIN para desactivarlo.';
 
   @override
-  String get settingsSetPinMessage => 'Ingresa un nuevo PIN de 4-6 dígitos.';
+  String get settingsSetPinMessage => 'Ingresa un nuevo PIN de 4 dígitos.';
 
   @override
   String get settingsConfirmPinMessage => 'Confirma tu PIN.';

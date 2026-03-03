@@ -1,4 +1,3 @@
-/// Modelo para un punto de datos en la tendencia mensual
 class TrendPoint {
   final DateTime date;
   final double income;

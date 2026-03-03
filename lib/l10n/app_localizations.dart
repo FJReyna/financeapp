@@ -491,7 +491,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsSetPinMessage.
   ///
   /// In en, this message translates to:
-  /// **'Enter a 4-6 digit PIN.'**
+  /// **'Enter a 4 digit PIN.'**
   String get settingsSetPinMessage;
 
   /// No description provided for @settingsConfirmPinMessage.

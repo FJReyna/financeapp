@@ -208,7 +208,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsDisablePinMessage => 'Enter your PIN to disable it.';
 
   @override
-  String get settingsSetPinMessage => 'Enter a 4-6 digit PIN.';
+  String get settingsSetPinMessage => 'Enter a 4 digit PIN.';
 
   @override
   String get settingsConfirmPinMessage => 'Confirm your PIN.';
