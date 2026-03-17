@@ -4,6 +4,12 @@
 
 A personal finance management application built with Flutter, designed to help users track their income and expenses, visualize spending patterns, and maintain financial health.
 
+## App Preview
+
+| Dashboard | Transactions | Analytics | Settings
+|-----------|-------------|-----------|-----------
+| ![Dashboard](screenshots/home.png) | ![Transactions](screenshots/transactions.png) | ![Analytics](screenshots/stats.png) | ![Settings](screenshots/settings.png)
+
 ## Features
 
 ### Transaction Management
@@ -12,12 +18,18 @@ A personal finance management application built with Flutter, designed to help u
 - Detailed transaction information including title, amount, category, date, and description
 - Swipe-to-delete functionality for quick transaction removal
 
+| View | Add | Delete |
+|-----------|-----------|-----------|
+| <img src="screenshots/transactions.png" width="200" alt="transactions" /> | <img src="screenshots/addtransaction.png" width="200" alt="add_transaction" /> | <img src="screenshots/deletetransaction.png" width="200" alt="delete_transaction" /> |
+
 ### Categories
 - Customizable expense and income categories
 - Pre-defined categories: Housing, Food, Transportation, Entertainment, and Other
 - Visual category representation with icons and colors
 - Category-based spending analysis
 - Add custom categories to fit personal needs
+
+<img src="screenshots/addcategory.png" width="200" alt="add_category" />
 
 ### Dashboard
 - Real-time total balance calculation
@@ -27,6 +39,8 @@ A personal finance management application built with Flutter, designed to help u
 - Spending breakdown by category with visual pie chart representation
 - Monthly trend analysis with interactive charts
 
+<img src="screenshots/home.png" width="200" alt="home" />     <img src="screenshots/home2.png" width="200" alt="home2" />
+
 ### Statistics & Analytics
 - Comprehensive statistics view with multiple time periods (week, month, year)
 - Interactive bar charts showing income and expense trends
@@ -34,16 +48,32 @@ A personal finance management application built with Flutter, designed to help u
 - Visual representation of financial patterns
 - Historical data analysis
 
+| Week | Month | Year |
+|-----------|-----------|-----------|
+| <img src="screenshots/week.png" width="200" alt="week" /> | <img src="screenshots/month.png" width="200" alt="month" /> | <img src="screenshots/year.png" width="200" alt="year" /> |
+
 ### Settings & Customization
 - Multi-language support (English and Spanish)
 - Theme customization (Light, Dark, System)
 - Currency selection
 - PIN security for app access
 
+| English | Spanish |
+|-----------|-----------|
+| <img src="screenshots/settings.png" width="200" alt="settings" /> | <img src="screenshots/spanish.png" width="200" alt="spanish" /> |
+
+| Light Mode | Dark Mode |
+|-----------|-----------|
+| <img src="screenshots/settings.png" width="200" alt="pin" /> | <img src="screenshots/darkmode.png" width="200" alt="darkmode" /> |
+
 ### Security
 - Optional PIN protection
 - 4-digit PIN setup and verification
 - Secure local data storage
+
+| Pin Protection|
+|-----------|
+| <img src="screenshots/pin.png" width="200" alt="pin" /> |
 
 ## Technical Stack
 
