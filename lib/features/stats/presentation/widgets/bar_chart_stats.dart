@@ -76,7 +76,9 @@ class _BarCharStatsState extends State<BarCharStats> {
       return pointMax > max ? pointMax : max;
     });
 
-    return ((maxValue / 1000).ceil() * 1000).toDouble();
+    // Asegura que _maxY sea al menos 1000 para evitar interval = 0
+    final calculatedMax = ((maxValue / 1000).ceil() * 1000).toDouble();
+    return calculatedMax > 0 ? calculatedMax : 1000.0;
   }
 
   Widget leftTitles(double value, TitleMeta meta) {
@@ -205,7 +207,9 @@ class _BarCharStatsState extends State<BarCharStats> {
                 sideTitles: SideTitles(
                   showTitles: true,
                   reservedSize: 40,
-                  interval: _maxY / 3,
+                  interval: (_maxY / 3).isFinite && (_maxY / 3) > 0
+                      ? _maxY / 3
+                      : 1,
                   getTitlesWidget: (value, meta) => leftTitles(value, meta),
                 ),
               ),
