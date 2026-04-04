@@ -76,7 +76,6 @@ class _BarCharStatsState extends State<BarCharStats> {
       return pointMax > max ? pointMax : max;
     });
 
-    // Asegura que _maxY sea al menos 1000 para evitar interval = 0
     final calculatedMax = ((maxValue / 1000).ceil() * 1000).toDouble();
     return calculatedMax > 0 ? calculatedMax : 1000.0;
   }

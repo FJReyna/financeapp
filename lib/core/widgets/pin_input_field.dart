@@ -54,6 +54,7 @@ class _PinInputFieldState extends State<PinInputField> {
     return GestureDetector(
       onTap: () {
         _focusNode.requestFocus();
+        SystemChannels.textInput.invokeMethod('TextInput.show');
       },
       child: Stack(
         children: [
